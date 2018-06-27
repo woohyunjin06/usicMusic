@@ -10,11 +10,12 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:background="@color/colorWhite"
         android:elevation="5dp">
 
         <ImageView
+            android:id="@+id/logo_login"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="@drawable/bg_login"
@@ -34,13 +35,17 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="60dp"
         app:cardBackgroundColor="#e9e9e9"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -51,10 +56,11 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_square"
-                android:elevation="5dp"
+                android:elevation="2dp"
                 android:padding="10dp" />
 
 
@@ -66,10 +72,11 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_square"
-                android:elevation="5dp"
+                android:elevation="2dp"
                 android:padding="10dp" />
 
 
@@ -90,4 +97,91 @@
 
     </android.support.v7.widget.CardView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <LinearLayout
+            android:id="@+id/btn_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:layout_below="@id/ifyou"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp">
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_square_grey"
+                android:elevation="2dp"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
+                android:textSize="15sp"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_square_grey"
+                android:elevation="2dp"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
+                android:textSize="15sp"
+                android:text="Get Start" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ifyou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="40dp"
+                android:layout_weight="1"
+                android:text="Back" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="Get Start" >
+
+                <com.narsha2018.usicmusic.view.GradientTextView
+                    android:id="@+id/join_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="If You Want Join"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

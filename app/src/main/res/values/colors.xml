@@ -7,4 +7,7 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+
+    <color name="colorGradientStart">#ff2d8b</color>
+    <color name="colorGradientEnd">#8b74e9</color>
 </resources>
