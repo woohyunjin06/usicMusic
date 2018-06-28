@@ -10,22 +10,20 @@ import com.narsha2018.usicmusic.fragment.RankFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-
-
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewPager()
+
     }
 
     private fun initViewPager() {
-        viewpager.adapter = FragmentAdapter.Holder(supportFragmentManager)
+        viewPager.adapter = FragmentAdapter.Holder(supportFragmentManager)
                 .add(RankFragment())
                 .add(ChartFragment())
                 .set()
-        viewpager.overScrollMode = View.OVER_SCROLL_NEVER
+        viewPager.overScrollMode = View.OVER_SCROLL_NEVER
     }
 }

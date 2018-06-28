@@ -7,9 +7,9 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-    <me.kaelaela.verticalviewpager.VerticalViewPager
-        android:id="@+id/viewpager"
+    <fr.castorflex.android.verticalviewpager.VerticalViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -13,8 +13,9 @@ class ChartFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        val v = inflater.inflate(R.layout.fragment_chart, container, false)
 
 
-        return inflater.inflate(R.layout.fragment_chart, container, false)
+        return v
     }
 }
