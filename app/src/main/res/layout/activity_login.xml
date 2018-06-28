@@ -18,9 +18,9 @@
             android:id="@+id/logo_login"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@drawable/bg_login"
+            android:background="@drawable/bg_img_login"
             android:scaleType="centerCrop"
-            android:src="@drawable/gradient_main" />
+            android:src="@drawable/bg_round_item" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_square"
+                android:background="@drawable/bg_round_white"
                 android:elevation="2dp"
                 android:padding="10dp" />
 
@@ -75,7 +75,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_square"
+                android:background="@drawable/bg_round_white"
                 android:elevation="2dp"
                 android:padding="10dp" />
 
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/round_square"
+                android:background="@drawable/bg_round_white"
                 android:elevation="5dp"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
@@ -122,7 +122,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="40dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_square_grey"
+                android:background="@drawable/bg_round_grey"
                 android:elevation="2dp"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
@@ -137,7 +137,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_square_grey"
+                android:background="@drawable/bg_round_grey"
                 android:elevation="2dp"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"

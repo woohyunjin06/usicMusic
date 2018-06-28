@@ -15,9 +15,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@drawable/bg_main"
+            android:background="@drawable/bg_img_main"
             android:scaleType="centerCrop"
-            android:src="@drawable/gradient_main" />
+            android:src="@drawable/bg_round_item" />
 
         <ImageView
             android:layout_width="180dp"
@@ -33,7 +33,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/round_square"
+            android:background="@drawable/bg_round_white"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -44,7 +44,7 @@
                 <ImageView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/crown" />
+                    android:src="@drawable/ic_crown" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                 app:cardElevation="5dp"
                 app:cardBackgroundColor="#e9e9e9"
                 android:layout_gravity="bottom"
-                android:background="@drawable/bg_rank">
+                android:background="@drawable/bg_round_grey">
 
             </android.support.v7.widget.CardView>
 
@@ -111,7 +111,7 @@
                 app:cardElevation="5dp"
                 app:cardBackgroundColor="#e9e9e9"
                 android:layout_gravity="bottom"
-                android:background="@drawable/bg_rank">
+                android:background="@drawable/bg_round_grey">
 
             </android.support.v7.widget.CardView>
 
@@ -143,7 +143,7 @@
                 app:cardElevation="5dp"
                 app:cardBackgroundColor="#e9e9e9"
                 android:layout_gravity="bottom"
-                android:background="@drawable/bg_rank">
+                android:background="@drawable/bg_round_grey">
 
             </android.support.v7.widget.CardView>
 
@@ -176,7 +176,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:background="@drawable/round_square"
+                android:background="@drawable/bg_round_white"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_right"
+        android:background="@drawable/bg_round_bar"
         android:layout_marginRight="60dp"
         android:orientation="horizontal">
 

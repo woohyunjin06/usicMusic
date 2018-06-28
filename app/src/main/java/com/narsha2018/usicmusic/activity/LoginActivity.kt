@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val btmDrawable:BitmapDrawable = ContextCompat.getDrawable(this, R.drawable.bg_login) as BitmapDrawable
+        val btmDrawable:BitmapDrawable = ContextCompat.getDrawable(this, R.drawable.bg_img_login) as BitmapDrawable
         val btmBitmap: Bitmap = blurBitmap(this, btmDrawable.bitmap, 25)
         val resultDrawable = BitmapDrawable(resources, btmBitmap)
         logo_login.background = resultDrawable

@@ -11,9 +11,9 @@
         android:id="@+id/bg_entrance"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_splash"
+        android:background="@drawable/bg_img_splash"
         android:scaleType="centerCrop"
-        android:src="@drawable/gradient_main" />
+        android:src="@drawable/bg_round_item" />
 
 
     <LinearLayout
@@ -62,7 +62,7 @@
                 android:id="@+id/go"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_square_stroke"
+                android:background="@drawable/bg_round_btn"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
                 android:text="Let's feeling"

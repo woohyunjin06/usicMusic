@@ -20,7 +20,7 @@ class EntranceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entrance)
-        val btmDrawable: BitmapDrawable = ContextCompat.getDrawable(this, R.drawable.bg_splash) as BitmapDrawable
+        val btmDrawable: BitmapDrawable = ContextCompat.getDrawable(this, R.drawable.bg_img_splash) as BitmapDrawable
         val btmBitmap: Bitmap = blurBitmap(this, btmDrawable.bitmap, 5)
         val resultDrawable = BitmapDrawable(resources, btmBitmap)
         bg_entrance.background = resultDrawable
