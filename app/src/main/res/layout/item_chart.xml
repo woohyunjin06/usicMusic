@@ -40,12 +40,14 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2018. 06. 28"
                         android:textColor="@color/colorGrey" />
 
                     <TextView
+                        android:id="@+id/musicTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="What?"
@@ -54,6 +56,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/btn_like"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
@@ -70,6 +73,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true">
                 <TextView
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -111,7 +115,7 @@
     </android.support.v7.widget.CardView>
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile1_img"
+        android:id="@+id/thumbnail"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_gravity="center_vertical"

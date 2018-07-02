@@ -1,17 +1,14 @@
-package com.narsha2018.usicmusic.network
+package com.narsha2018.usicmusic.util
 
 import android.content.Context
-import android.support.v4.content.ContextCompat.startActivity
-import com.narsha2018.usicmusic.activity.MainActivity
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import com.narsha2018.usicmusic.R
 
-class RestRequest(val context: Context){
+class RestUtils(val context: Context){
     fun getResult(requestLocation: String, body: String) : String?{
         var result: String?= null
         doAsync {

@@ -7,14 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.narsha2018.usicmusic.R
+import org.jetbrains.anko.toast
 
 class RankFragment : Fragment() {
 
-
+    private var v : View? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_rank, container, false)
+        v = inflater.inflate(R.layout.fragment_rank, container, false)
 
+        return v
+    }
+    fun getLayoutView() : View?{
         return v
     }
 }

@@ -3,7 +3,7 @@ package com.narsha2018.usicmusic.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.narsha2018.usicmusic.R
-import com.narsha2018.usicmusic.network.RestRequest
+import com.narsha2018.usicmusic.util.RestUtils
 import android.content.Context
 import android.renderscript.ScriptIntrinsicBlur
 import android.renderscript.Allocation
@@ -18,7 +18,7 @@ import org.jetbrains.anko.startActivity
 
 class LoginActivity : AppCompatActivity() {
 
-    val request = RestRequest(this)
+    val request = RestUtils(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

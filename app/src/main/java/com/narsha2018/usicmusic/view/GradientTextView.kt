@@ -6,7 +6,7 @@ import android.graphics.Shader
 import android.graphics.LinearGradient
 import android.util.AttributeSet
 import android.widget.TextView
-import com.narsha2018.usicmusic.util.Utils
+import com.narsha2018.usicmusic.util.ColorUtils
 
 
 class GradientTextView : TextView {
@@ -22,7 +22,7 @@ class GradientTextView : TextView {
 
         paint.shader = LinearGradient(
                 0f, 0f, width, height,
-                Utils.getColors(context),
+                ColorUtils.getColors(context),
                 null,
                 Shader.TileMode.CLAMP
         )
