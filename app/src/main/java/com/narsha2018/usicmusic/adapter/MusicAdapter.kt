@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.activity.MainActivity
@@ -47,7 +48,14 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
         holder.date.text = mItems[position].date
         holder.playTime.text = mItems[position].playTime
 
-        Glide.with(contexts).load(mItems[position].thumbnailUri).into(holder.thumbnail)
+        Glide.with(contexts)
+                .load(mItems[position].thumbnailUri)
+                .apply(RequestOptions()
+                        .placeholder(R.mipmap.ic_launcher) //로딩
+                        .error(R.mipmap.ic_launcher) //실패
+                        .fallback(R.mipmap.ic_launcher)) //없음
+                .into(holder.thumbnail)
+
         if(mItems[position].isLike) {
             isLike = true
             ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#ff0000"))) // set tint
