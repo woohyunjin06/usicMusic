@@ -8,7 +8,7 @@ import com.narsha2018.usicmusic.R
 class ColorUtils {
     companion object {
         fun getColors(c: Context) : IntArray{
-            return intArrayOf(ContextCompat.getColor(c, R.color.colorGradientStart),ContextCompat.getColor(c, R.color.colorGradientStart))
+            return intArrayOf(ContextCompat.getColor(c, R.color.colorGradientStart),ContextCompat.getColor(c, R.color.colorGradientEnd))
         }
     }
 }
