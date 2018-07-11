@@ -24,4 +24,8 @@ class MediaPlayer : MediaPlayer() {
             false
         }
     }
+    fun stopMusic() {
+        stop()
+        release()
+    }
 }

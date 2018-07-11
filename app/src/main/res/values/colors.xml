@@ -11,4 +11,8 @@
 
     <color name="colorGradientStart">#ff2d8b</color>
     <color name="colorGradientEnd">#8b74e9</color>
+
+    <color name="colorCherry">#f97389</color>
+    <color name="colorBanana">#ffe479</color>
+    <color name="colorMelon">#75e466</color>
 </resources>

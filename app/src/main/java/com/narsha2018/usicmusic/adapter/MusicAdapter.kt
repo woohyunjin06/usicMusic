@@ -17,11 +17,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
-import com.narsha2018.usicmusic.activity.MainActivity
-import com.narsha2018.usicmusic.fragment.ChartFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_chart.view.*
-import org.jetbrains.anko.imageURI
 import org.jetbrains.anko.toast
 import java.util.ArrayList
 

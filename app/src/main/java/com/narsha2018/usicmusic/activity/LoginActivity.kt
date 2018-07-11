@@ -28,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
         logo_login.background = resultDrawable
 
         go.setOnClickListener { startActivity<MainActivity>() }
+        start.setOnClickListener { startActivity<RegisterActivity>() }
 
     }
 }
