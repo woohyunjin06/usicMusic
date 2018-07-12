@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -56,11 +57,14 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:layout_marginTop="12dp"
+                android:id="@+id/id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/bg_round_white"
                 android:elevation="2dp"
+                android:maxLength="20"
+                android:maxLines="1"
                 android:padding="10dp" />
 
 
@@ -72,11 +76,15 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:layout_marginTop="12dp"
+                android:id="@+id/pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/bg_round_white"
                 android:elevation="2dp"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:maxLines="1"
                 android:padding="10dp" />
 
 
@@ -102,15 +110,13 @@
         android:layout_height="wrap_content">
 
 
-
-
         <LinearLayout
             android:id="@+id/btn_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/ifyou"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:layout_below="@id/ifyou"
             android:paddingBottom="10dp"
             android:paddingTop="5dp">
 
@@ -126,8 +132,8 @@
                 android:elevation="2dp"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
-                android:textSize="15sp"
-                android:text="Back" />
+                android:text="Back"
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/start"
@@ -141,11 +147,12 @@
                 android:elevation="2dp"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
-                android:textSize="15sp"
-                android:text="Get Start" />
+                android:text="Get Start"
+                android:textSize="15sp" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ifyou"
             android:layout_width="match_parent"
@@ -170,14 +177,14 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="Get Start" >
+                android:text="Get Start">
 
                 <com.narsha2018.usicmusic.view.GradientTextView
                     android:id="@+id/join_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="If You Want Join"/>
+                    android:text="If You Want Join"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 

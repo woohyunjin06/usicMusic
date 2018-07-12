@@ -25,7 +25,7 @@ class EntranceActivity : AppCompatActivity() {
         val resultDrawable = BitmapDrawable(resources, btmBitmap)
         bg_entrance.background = resultDrawable
 
-        go.setOnClickListener { startActivity<LoginActivity>() }
+        go.setOnClickListener { startActivity<LoginActivity>(); finish()}
     }
 
     private fun blurBitmap(context: Context, sentBitmap: Bitmap, radius: Int): Bitmap {

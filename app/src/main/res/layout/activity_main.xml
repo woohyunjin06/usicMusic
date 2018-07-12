@@ -171,6 +171,8 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:focusable="true"
+            android:clickable="true"
             android:id="@+id/favorite"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -194,6 +196,8 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:focusable="true"
+            android:clickable="true"
             android:id="@+id/music"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -218,6 +222,8 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:focusable="true"
+            android:clickable="true"
             android:id="@+id/find"
             android:layout_width="100dp"
             android:layout_height="100dp"

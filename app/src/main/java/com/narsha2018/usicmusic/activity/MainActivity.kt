@@ -31,13 +31,14 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
         else{ //끄기
             btn.imageResource = R.drawable.ic_play
         }
-        music.onClick { startActivityForResult<MusicActivity>(1) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mediaPlayer.init()
+        music.onClick { startActivityForResult<MusicActivity>(1) }
+        favorite.onClick { startActivityForResult<FavoriteActivity>(1)}
 
 
     }

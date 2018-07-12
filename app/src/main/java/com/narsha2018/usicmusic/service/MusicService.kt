@@ -1,7 +1,9 @@
 package com.narsha2018.usicmusic.service
 
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
@@ -18,7 +20,7 @@ class MusicService : Service() {
         val SONG_NAME = "songTitle"
     }
 
-    val mediaPlayer = MediaPlayer()
+    private val mediaPlayer = MediaPlayer()
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -38,6 +40,10 @@ class MusicService : Service() {
             val mBuilder : NotificationCompat.Builder = NotificationCompat.Builder(this, "usicMusic_NOTIFY")
                     .setSmallIcon(R.drawable.ic_favorite)
                     .setContentTitle(song)
+                    .setContentIntent(pendingIntent)
+                    .setContentText("playing")
+            val mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            mNotifyManager.notify(1, mBuilder.build())
 
         }
         else{

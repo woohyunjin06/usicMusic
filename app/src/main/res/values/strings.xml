@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">usicMusic</string>
 
-    <string name="server_url">localhost</string>
+    <string name="server_url">http://10.80.162.221:3000</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

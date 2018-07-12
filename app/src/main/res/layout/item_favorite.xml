@@ -8,10 +8,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/bg_round_favorite"
-        android:elevation="10dp"
-        android:layout_margin="30dp">
+        android:elevation="20dp"
+        android:layout_margin="50dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/thumbnail"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="30dp"
@@ -26,11 +27,13 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2018. 06. 27"
                 android:textColor="#f7f7f7"/>
             <TextView
+                android:id="@+id/musicTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
@@ -41,23 +44,31 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/btn_play"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_play" />
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="bottom||end"
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:textColor="@color/colorWhite"
+                android:layout_gravity="bottom|end"
                 android:layout_marginBottom="5dp"
                 android:textSize="15dp"
                 android:text="3:06" />
 
-        </LinearLayout>
-        
+        </FrameLayout>
+
         <LinearLayout
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
