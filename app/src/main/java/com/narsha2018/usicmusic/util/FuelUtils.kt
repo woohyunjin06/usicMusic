@@ -1,19 +1,15 @@
 package com.narsha2018.usicmusic.util
 
 import android.content.Context
-import android.util.Log
-import android.util.Log.d
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.narsha2018.usicmusic.activity.LoginActivity
+import com.narsha2018.usicmusic.activity.RegisterActivity
 import com.narsha2018.usicmusic.model.AccountResponse
 import es.dmoral.toasty.Toasty
-import org.jetbrains.anko.toast
-import java.lang.reflect.Type
 
 class FuelUtils (private val c: Context){
     init {
@@ -34,11 +30,19 @@ class FuelUtils (private val c: Context){
                     if(url.contains("login")) {
                         (c as LoginActivity).notifyFinish(resultJson as AccountResponse)
                     }
+                    else if(url.contains("register")) {
+                        (c as RegisterActivity).notifyFinish(resultJson as AccountResponse)
+                    }
                 }
                 is Result.Success -> {
-                    if(url.contains("login")) {
+                    if(url.contains("auth")) {
                         resultJson = gson.fromJson(result.get().content, AccountResponse::class.java)
-                        (c as LoginActivity).notifyFinish(resultJson as AccountResponse)
+                        if (url.contains("login")) {
+                            (c as LoginActivity).notifyFinish(resultJson as AccountResponse)
+                        }
+                        if (url.contains("register")) {
+                            (c as RegisterActivity).notifyFinish(resultJson as AccountResponse)
+                        }
                     }
                 }
             }
