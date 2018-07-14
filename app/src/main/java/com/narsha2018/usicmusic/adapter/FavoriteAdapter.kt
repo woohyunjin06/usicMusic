@@ -38,7 +38,6 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
         holder.musicTitle.text = mItems[position].musicTitle
 
         holder.date.text = mItems[position].date
-        holder.playTime.text = mItems[position].playTime
         Glide.with(contexts)
                 .load(mItems[position].thumbnailUri)
                 .apply(RequestOptions()
@@ -59,9 +58,8 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
         val musicTitle: TextView = itemView.musicTitle
         val date: TextView = itemView.date
         val thumbnail: CircleImageView = itemView.thumbnail
-        val playTime: TextView = itemView.time
         val play: ImageView = itemView.btn_play
     }
 }
 
-class FavoriteItem(val musicTitle: String, val date: String,val musicUri: String, val playTime: String, val thumbnailUri: String)
+class FavoriteItem(val musicTitle: String, val date: String,val musicUri: String, val thumbnailUri: String)

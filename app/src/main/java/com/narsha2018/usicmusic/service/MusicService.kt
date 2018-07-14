@@ -21,17 +21,19 @@ class MusicService : Service() {
     }
 
     private val mediaPlayer = MediaPlayer()
-
+    private var mNotifyManager : NotificationManager? = null
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
     }
 
+    override fun onCreate() {
+        mediaPlayer.init()
+        super.onCreate()
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val message = intent!!.extras!!.getBoolean(MESSAGE_KEY, false)
-        val url = intent.extras!!.getString(SONG_URL,"")
+        val url = intent!!.extras!!.getString(SONG_URL,"")
         val song = intent.extras!!.getString(SONG_NAME, "")
-        if(message){
-            mediaPlayer.init()
             mediaPlayer.playMusic(url)
 
             val mainIntent = Intent(this, MainActivity::class.java)
@@ -43,13 +45,15 @@ class MusicService : Service() {
                     .setContentIntent(pendingIntent)
                     .setOngoing(true)
                     .setContentText("playing")
-            val mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            mNotifyManager.notify(1, mBuilder.build())
+            mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            mNotifyManager!!.notify(1, mBuilder.build())
 
-        }
-        else{
-            mediaPlayer.stopMusic()
-        }
         return START_NOT_STICKY
+    }
+
+    override fun onDestroy() {
+        mediaPlayer.stop()
+        mNotifyManager!!.cancel(1)
+        super.onDestroy()
     }
 }

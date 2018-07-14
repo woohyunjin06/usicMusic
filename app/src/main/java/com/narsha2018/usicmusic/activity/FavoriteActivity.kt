@@ -41,10 +41,10 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
         addDummyData()
     }
     private fun addDummyData(){
-        mItems.add(FavoriteItem("1번노래","2018. 06. 29","","5:03", "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg"))
-        mItems.add(FavoriteItem("2번노래","2018. 06. 25","","4:03", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"))
-        mItems.add(FavoriteItem("3번노래","2018. 06. 21","","2:08", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"))
-        mItems.add(FavoriteItem("4번노래","2018. 06. 29","","1:49", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"))
+        mItems.add(FavoriteItem("1번노래","2018. 06. 29","", "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg"))
+        mItems.add(FavoriteItem("2번노래","2018. 06. 25","", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"))
+        mItems.add(FavoriteItem("3번노래","2018. 06. 21","", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"))
+        mItems.add(FavoriteItem("4번노래","2018. 06. 29","", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"))
         adapter!!.notifyDataSetChanged()
     }
 }

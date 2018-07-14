@@ -17,7 +17,9 @@ import com.google.gson.reflect.TypeToken
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.model.MusicResponse
 import com.narsha2018.usicmusic.service.MusicService
+import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
+import com.narsha2018.usicmusic.util.PreferencesUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_music.*
 import org.jetbrains.anko.imageResource
@@ -31,29 +33,27 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     var isPlaying = false
     private val gson = Gson()
     override fun onClickPlay(idx: String, title: String, uri: String, btn: ImageView) {
-        val play : Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
-        if(btn.drawable.constantState == play?.constantState){ // 켜기
+        val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
+        if (btn.drawable.constantState == play?.constantState) { // 켜기
             btn.imageResource = R.drawable.ic_pause
             isPlaying = true
             val i = Intent(this, MusicService::class.java)
-            i.putExtra(MusicService.MESSAGE_KEY, true)
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
             startService(i)
-        }
-        else{ //끄기
+        } else { //끄기
             btn.imageResource = R.drawable.ic_play
             isPlaying = false
             val i = Intent(this, MusicService::class.java)
-            i.putExtra(MusicService.MESSAGE_KEY, false)
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
-            startService(i)
+            stopService(i)
         }
     }
+
     private val fuelUtils = FuelUtils(this)
     private val mItems = ArrayList<MusicItem>()
-    private var adapter : MusicAdapter? = null
+    private var adapter: MusicAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_music)
@@ -61,6 +61,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         //addDummyData()
         loadMusic()
     }
+
     private fun initRecyclerView() { // RecyclerView 기본세팅
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)
@@ -69,31 +70,37 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
     }
-    private fun addDummyData(){
-        mItems.add(MusicItem("","1번노래","2018. 06. 29","http://10.80.162.221:3000/music/twice.mp3","5:03", "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg",true))
-        mItems.add(MusicItem("","2번노래","2018. 06. 25","","4:03", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg",false))
-        mItems.add(MusicItem("","3번노래","2018. 06. 21","","2:08", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg",false))
-        mItems.add(MusicItem("","4번노래","2018. 06. 29","","1:49", "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg",true))
-        adapter!!.notifyDataSetChanged()
-    }
 
     private fun loadMusic() {
         fuelUtils.getMusicData()
 
     }
 
-    fun notifyFinish(musicInfo : String){
+    fun notifyFinish(musicInfo: String) {
         val arr = JSONObject(musicInfo).getJSONArray("music")
         val arrList = ArrayList<MusicResponse>()
-        for (idx : Int in 0 until arr.length()){
-            val item : JSONObject = arr.getJSONObject(idx)
+        for (idx: Int in 0 until arr.length()) {
+            val item: JSONObject = arr.getJSONObject(idx)
             arrList.add(MusicResponse(item.getBoolean("isMusic"), item.getString("_id"), item.getString("title"),
                     item.getString("music"), item.getJSONArray("rate"), item.getString("date")))
-            if(item.getBoolean("isMusic"))
-            mItems.add(MusicItem(item.getString("_id"),
-                    item.getString("title"),
-                    "2018. 06. 29","http://10.80.162.221:3000/music/twice.mp3","5:03", "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg",true))
+            if (item.getBoolean("isMusic")) {
+                val rateArr = item.getJSONArray("rate")
+                var isLike = false
+                for (idx2: Int in 0 until rateArr.length()){
+                    if(rateArr.getJSONObject(idx2).getString("id") == PreferencesUtils(this).getData("id"))
+                        isLike = true
+
+                    break
+                }
+                    mItems.add(MusicItem(item.getString("_id"),
+                            item.getString("title"),
+                            DateUtils.fromISO(item.getString("date"))!!,
+                            "http://10.80.162.221:3000/music/" + item.getString("music"),
+                            "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg", // TODO : CHANGE Thumbnail URI
+                            isLike))
+            }
         }
+        adapter!!.notifyDataSetChanged()
     }
 
     override fun onBackPressed() {

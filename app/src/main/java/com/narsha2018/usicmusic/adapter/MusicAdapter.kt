@@ -43,7 +43,6 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
         var isLike = false
         holder.musicTitle.text = mItems[position].musicTitle
         holder.date.text = mItems[position].date
-        holder.playTime.text = mItems[position].playTime
 
         Glide.with(contexts)
                 .load(mItems[position].thumbnailUri)
@@ -85,10 +84,9 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
         val musicTitle: TextView = itemView.musicTitle
         val date: TextView = itemView.date
         val thumbnail: CircleImageView = itemView.thumbnail
-        val playTime: TextView = itemView.time
         val like: ImageView = itemView.btn_like
         val play: ImageView = itemView.btn_play
     }
 }
 
-class MusicItem(val idx: String, val musicTitle: String, val date: String,val musicUri: String, val playTime: String, val thumbnailUri: String, val isLike: Boolean)
+class MusicItem(val idx: String, val musicTitle: String, val date: String,val musicUri: String, val thumbnailUri: String, val isLike: Boolean)

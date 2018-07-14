@@ -43,14 +43,14 @@
                         android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2018. 06. 28"
+                        android:text="date"
                         android:textColor="@color/colorGrey" />
 
                     <TextView
                         android:id="@+id/musicTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="What?"
+                        android:text="title"
                         android:textColor="@color/colorWhite"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -60,33 +60,23 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
+                    android:contentDescription="Like"
                     android:layout_margin="12dp"
                     android:tint="@color/colorGrey"
                     android:src="@drawable/ic_heart" />
 
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginEnd="12dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true">
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorWhite"
-                    android:text="3:06"/>
 
                 <ImageView
                     android:id="@+id/btn_play"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_play" />
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/ic_play"
+                    android:contentDescription="Play"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
 
-                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout
