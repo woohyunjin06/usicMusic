@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import com.google.gson.Gson
 import com.narsha2018.usicmusic.model.AccountRequest
 import com.narsha2018.usicmusic.model.AccountResponse
 import com.narsha2018.usicmusic.util.BitmapUtils
@@ -17,9 +18,12 @@ import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 import es.dmoral.toasty.Toasty
+import org.json.JSONObject
 
 
 class LoginActivity : AppCompatActivity() {
+
+    val gson = Gson()
     private val fuelUtil = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +46,11 @@ class LoginActivity : AppCompatActivity() {
         fuelUtil.postData("/api/auth/login", AccountRequest(id, pw))
     }
 
-    fun notifyFinish(accountResponse : AccountResponse){
-        if(accountResponse.status==200 && accountResponse.message.trim()!=""){ // success
-            PreferencesUtils(this).saveData("token",accountResponse.token)
-            Toasty.success(this, accountResponse.message).show()
+    fun notifyFinish(accountResponse : String){
+        val resultJson : AccountResponse = gson.fromJson(accountResponse,AccountResponse::class.java)
+        if(resultJson.status==200 && resultJson.message.trim()!=""){ // success
+            PreferencesUtils(this).saveData("token",resultJson.token)
+            Toasty.success(this, resultJson.message).show()
             startActivity<MainActivity>()
             finish()
         } else{

@@ -1,18 +1,26 @@
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.narsha2018.usicmusic.R
 import android.widget.ImageView
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
+import com.narsha2018.usicmusic.util.PreferencesUtils
 import com.narsha2018.usicmusic.view.MediaPlayer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 
 
@@ -20,7 +28,7 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
 
     val mediaPlayer : MediaPlayer = MediaPlayer()
 
-    override fun onClickPlay(idx: Int,title: String, uri: String, btn: ImageView) {
+    override fun onClickPlay(idx: String,title: String, uri: String, btn: ImageView) {
         mediaPlayer.playMusic(uri) //return boolean
         song.text = title
         val play : Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
@@ -37,12 +45,24 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mediaPlayer.init()
-        music.onClick { startActivityForResult<MusicActivity>(1) }
-        favorite.onClick { startActivityForResult<FavoriteActivity>(1)}
-
-
+        if(PreferencesUtils(this).getData("notificationChannel")!="yes")
+            createNotificationChannel()
+        music.onClick { startActivity<MusicActivity>() }
+        favorite.onClick { startActivity<FavoriteActivity>()}
     }
-    override fun onActivityResult(requestCode : Int, resultCode : Int, data : Intent) {
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationChannel = NotificationChannel("usicMusic_NOTIFY", "usicMusic Music Channel", NotificationManager.IMPORTANCE_DEFAULT).apply {
+                description = "channel description"
+                enableLights(true)
+                lightColor = Color.GREEN
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            }
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
+    /*override fun onActivityResult(requestCode : Int, resultCode : Int, data : Intent) {
 
     if (requestCode == 1) {
         if(resultCode == Activity.RESULT_OK){
@@ -52,5 +72,5 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
             //만약 반환값이 없을 경우의 코드를 여기에 작성하세요.
         }
     }
-}
+}*/
 }

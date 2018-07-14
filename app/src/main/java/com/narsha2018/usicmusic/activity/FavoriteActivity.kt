@@ -19,7 +19,7 @@ import org.jetbrains.anko.toast
 import java.util.*
 
 class FavoriteActivity : AppCompatActivity(), OnPlayListener {
-    override fun onClickPlay(idx: Int, title: String, uri: String, btn: ImageView) {
+    override fun onClickPlay(idx: String, title: String, uri: String, btn: ImageView) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

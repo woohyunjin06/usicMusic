@@ -6,6 +6,7 @@ import com.narsha2018.usicmusic.R
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
+import com.google.gson.Gson
 import com.narsha2018.usicmusic.model.AccountRequest
 import com.narsha2018.usicmusic.model.AccountResponse
 import com.narsha2018.usicmusic.util.BitmapUtils
@@ -23,6 +24,7 @@ import org.jetbrains.anko.uiThread
 
 class RegisterActivity : AppCompatActivity() {
 
+    val gson = Gson()
     private val fuelUtil = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +53,11 @@ class RegisterActivity : AppCompatActivity() {
         fuelUtil.postData("/api/auth/register", AccountRequest(id, strPw1))
     }
 
-    fun notifyFinish(accountResponse : AccountResponse){
-        if(accountResponse.status==200 && accountResponse.message.trim()!=""){ // success
+    fun notifyFinish(accountResponse : String){
+        val resultJson : AccountResponse = gson.fromJson(accountResponse, AccountResponse::class.java)
+        if(resultJson.status==200 && resultJson.message.trim()!=""){ // success
             //PreferencesUtils(this).saveData("token",accountResponse.token)
-            Toasty.success(this, accountResponse.message).show()
+            Toasty.success(this, resultJson.message).show()
             startActivity<LoginActivity>()
             finish()
         } else{

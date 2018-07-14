@@ -91,4 +91,4 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
     }
 }
 
-class MusicItem(val idx: Int, val musicTitle: String, val date: String,val musicUri: String, val playTime: String, val thumbnailUri: String, val isLike: Boolean)
+class MusicItem(val idx: String, val musicTitle: String, val date: String,val musicUri: String, val playTime: String, val thumbnailUri: String, val isLike: Boolean)

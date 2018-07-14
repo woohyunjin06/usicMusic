@@ -41,6 +41,7 @@ class MusicService : Service() {
                     .setSmallIcon(R.drawable.ic_favorite)
                     .setContentTitle(song)
                     .setContentIntent(pendingIntent)
+                    .setOngoing(true)
                     .setContentText("playing")
             val mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             mNotifyManager.notify(1, mBuilder.build())
