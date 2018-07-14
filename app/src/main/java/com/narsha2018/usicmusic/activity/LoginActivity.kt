@@ -49,13 +49,16 @@ class LoginActivity : AppCompatActivity() {
     fun notifyFinish(accountResponse : String){
         val resultJson : AccountResponse = gson.fromJson(accountResponse,AccountResponse::class.java)
         if(resultJson.status==200 && resultJson.message.trim()!=""){ // success
-            PreferencesUtils(this).saveData("token",resultJson.token)
+            PreferencesUtils(this).apply{
+                saveData("token",resultJson.token)
+                saveData("id", id.text.toString())
+            }
+
             Toasty.success(this, resultJson.message).show()
             startActivity<MainActivity>()
             finish()
         } else{
             Toasty.error(this, "Login failed").show()
-            id.setText("")
             pw.setText("")
         }
     }
