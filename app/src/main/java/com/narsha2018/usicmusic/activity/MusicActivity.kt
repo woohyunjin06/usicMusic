@@ -26,6 +26,7 @@ import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivityForResult
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 
@@ -78,26 +79,26 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
 
     fun notifyFinish(musicInfo: String) {
         val arr = JSONObject(musicInfo).getJSONArray("music")
-        val arrList = ArrayList<MusicResponse>()
-        for (idx: Int in 0 until arr.length()) {
+        for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
             val item: JSONObject = arr.getJSONObject(idx)
-            arrList.add(MusicResponse(item.getBoolean("isMusic"), item.getString("_id"), item.getString("title"),
-                    item.getString("music"), item.getJSONArray("rate"), item.getString("date")))
             if (item.getBoolean("isMusic")) {
                 val rateArr = item.getJSONArray("rate")
                 var isLike = false
-                for (idx2: Int in 0 until rateArr.length()){
-                    if(rateArr.getJSONObject(idx2).getString("id") == PreferencesUtils(this).getData("id"))
+                for (idx2: Int in 0 until rateArr.length()) {
+                    var authorID: String? = null
+                    val authorObject = rateArr.getJSONObject(idx2)
+                    if (authorObject.has("username"))
+                        authorID = authorObject.getString("username")
+                    if (authorID != null && authorID == PreferencesUtils(this).getData("id")) {
                         isLike = true
-
-                    break
+                    }
                 }
-                    mItems.add(MusicItem(item.getString("_id"),
-                            item.getString("title"),
-                            DateUtils.fromISO(item.getString("date"))!!,
-                            "http://10.80.162.221:3000/music/" + item.getString("music"),
-                            "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg", // TODO : CHANGE Thumbnail URI
-                            isLike))
+                mItems.add(MusicItem(item.getString("_id"),
+                        item.getString("title"),
+                        DateUtils.fromISO(item.getString("date"))!!,
+                        "http://10.80.162.221:3000/music/" + item.getString("music"),
+                        "https://images.pexels.com/photos/35807/rose-red-rose-romantic-rose-bloom.jpg", // TODO : CHANGE Thumbnail URI
+                        isLike))
             }
         }
         adapter!!.notifyDataSetChanged()
