@@ -2,14 +2,11 @@
 2018 Narsha Project
 
 # Skill
-* 서버통신 : RestAPI
+* 서버통신 : Fuel
 * 스트리밍 : MediaPlayer
 
 # Todo
-1. 회원가입
-2. 재생목록 리스트
-3. 음원 제작
-4. RestAPI -> Retrofit 2
+1. 음원 제작
 
 # Licenses
 <pre><code>
