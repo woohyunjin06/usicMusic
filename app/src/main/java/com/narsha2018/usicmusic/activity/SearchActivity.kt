@@ -18,12 +18,13 @@ import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_music.*
+import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.json.JSONObject
 
 
-class MusicActivity : AppCompatActivity(), OnPlayListener {
+class SearchActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
     private val gson = Gson()
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
@@ -56,6 +57,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         initRecyclerView()
         Toasty.Config.reset()
         loadMusic()
+        btn_search.onClick { loadMusic() }
     }
 
     private fun initRecyclerView() { // RecyclerView 기본세팅
@@ -68,14 +70,18 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     }
 
     private fun loadMusic() {
-        fuelUtils.getMusicData(false)
+        val keyword : String = edt_search.text.toString()
+        if(keyword.trim()!="")
+            fuelUtils.getSearchData(keyword)
+        else
+            Toasty.error(this, "검색어를 입력해주세요").show()
     }
 
-    fun notifyFinish(musicInfo: String) {
+    fun notifyFinish(musicInfo: String, keyword: String) {
         val arr = JSONObject(musicInfo).getJSONArray("music")
         for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
             val item: JSONObject = arr.getJSONObject(idx)
-            if (item.getBoolean("isMusic")) { // 소스가 아니고 음악이면
+            if (item.getBoolean("isMusic")&&item.getString("title").contains(keyword)) { // 소스가 아니고 음악이면
                 val rateArr = item.getJSONArray("rate")
                 var isLike = false
                 for (idx2: Int in 0 until rateArr.length()) { // 좋아요 한 사람중 자신의 이름을 찾으면 is Like = true
@@ -93,7 +99,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                         "http://10.80.162.221:3000/" + item.getString("cover"),
                         isLike,
                         item.getString("artist")
-                        ))
+                ))
             }
         }
         adapter!!.notifyDataSetChanged()

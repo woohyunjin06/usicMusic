@@ -15,6 +15,7 @@ import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_favorite.view.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.ArrayList
 
 /**
@@ -38,6 +39,7 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
         holder.musicTitle.text = mItems[position].musicTitle
 
         holder.date.text = mItems[position].date
+        holder.artist.text = mItems[position].artist
         Glide.with(contexts)
                 .load(mItems[position].thumbnailUri)
                 .apply(RequestOptions()
@@ -45,6 +47,7 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
                         .error(R.mipmap.ic_launcher) //실패
                         .fallback(R.mipmap.ic_launcher)) //없음
                 .into(holder.thumbnail)
+        holder.btn.onClick { listener.onClickPlay(null, mItems[position].musicTitle, mItems[position].musicUri, holder.btn) }
     }
 
     // 데이터 셋의 크기를 리턴
@@ -58,8 +61,9 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
         val musicTitle: TextView = itemView.musicTitle
         val date: TextView = itemView.date
         val thumbnail: CircleImageView = itemView.thumbnail
-        val play: ImageView = itemView.btn_play
+        val artist: TextView = itemView.artist
+        val btn: ImageView = itemView.btn_play
     }
 }
 
-class FavoriteItem(val musicTitle: String, val date: String,val musicUri: String, val thumbnailUri: String)
+class FavoriteItem(val musicTitle: String, val date: String,val musicUri: String, val thumbnailUri: String, val artist: String)

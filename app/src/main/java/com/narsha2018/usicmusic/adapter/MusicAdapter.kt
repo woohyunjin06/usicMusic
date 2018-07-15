@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
+import com.narsha2018.usicmusic.util.FuelUtils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_chart.view.*
 import org.jetbrains.anko.toast
@@ -43,7 +44,7 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
         var isLike = false
         holder.musicTitle.text = mItems[position].musicTitle
         holder.date.text = mItems[position].date
-
+        holder.artist.text = mItems[position].artist
         Glide.with(contexts)
                 .load(mItems[position].thumbnailUri)
                 .apply(RequestOptions()
@@ -55,16 +56,21 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
         if(mItems[position].isLike) {
             isLike = true
             ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#ff0000"))) // set tint
+        } else{
+            isLike = false
+            ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#e9e9e9"))) // set tint
         }
 
+
         holder.like.setOnClickListener {
+
             if(isLike){ // 좋아요 취소
-                contexts.toast("dislike "+ mItems[position].idx+" "+mItems[position].musicTitle)
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#e9e9e9")))
+                FuelUtils(contexts).deleteFavorite(mItems[position].idx)
             }
             else{ // 좋아요
-                contexts.toast("like "+ mItems[position].idx+" "+mItems[position].musicTitle)
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#ff0000")))
+                FuelUtils(contexts).postFavorite(mItems[position].idx)
             }
             isLike = !isLike
         }
@@ -83,10 +89,11 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val musicTitle: TextView = itemView.musicTitle
         val date: TextView = itemView.date
+        val artist: TextView = itemView.artist
         val thumbnail: CircleImageView = itemView.thumbnail
         val like: ImageView = itemView.btn_like
         val play: ImageView = itemView.btn_play
     }
 }
 
-class MusicItem(val idx: String, val musicTitle: String, val date: String,val musicUri: String, val thumbnailUri: String, val isLike: Boolean)
+class MusicItem(val idx: String, val musicTitle: String, val date: String,val musicUri: String, val thumbnailUri: String, val isLike: Boolean, val artist: String)

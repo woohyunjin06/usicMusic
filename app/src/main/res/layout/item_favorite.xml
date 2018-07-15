@@ -30,17 +30,27 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2018. 06. 27"
+                android:text="date"
+                android:layout_gravity="center_horizontal"
                 android:textColor="#f7f7f7"/>
+
             <TextView
                 android:id="@+id/musicTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
-                android:text="Without You"
+                android:text="title"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorWhite"/>
 
 
+            <TextView
+                android:id="@+id/artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="artist"
+                android:textColor="#f7f7f7"/>
 
         </LinearLayout>
 

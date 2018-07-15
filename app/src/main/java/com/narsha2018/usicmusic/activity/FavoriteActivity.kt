@@ -94,8 +94,6 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                                 item.getString("artist")
                         ))
                 }
-                //if(isLike)
-
             }
         }
         adapter!!.notifyDataSetChanged()

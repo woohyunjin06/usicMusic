@@ -83,10 +83,37 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="5dp">
 
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/musicTitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="title"
+                        android:textColor="#595959"
+                        android:textSize="30sp" />
+
+
+                    <TextView
+                        android:id="@+id/artist2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="artist"
+                        android:textColor="#595959"/>
+
+                </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile1_img"
+                android:id="@+id/profile2_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
@@ -113,10 +140,36 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="5dp">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/musicTitle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:text="title"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#595959"/>
+
+
+                    <TextView
+                        android:id="@+id/artist1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="artist"
+                        android:textColor="#595959"/>
+
+                </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile2_img"
+                android:id="@+id/profile1_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
@@ -144,6 +197,31 @@
                 app:cardBackgroundColor="#e9e9e9"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/musicTitle3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:text="title"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#595959"/>
+
+                    <TextView
+                        android:id="@+id/artist3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="artist"
+                        android:textColor="#595959"/>
+
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
