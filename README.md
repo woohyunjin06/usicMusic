@@ -5,6 +5,9 @@
 * 서버통신 : Fuel
 * 실시간 음원 스트리밍 : MediaPlayer with Foreground Service
 
+# Bugs
+* 다른화면엣 재생한 음악 다른화면에서 Catch 불가
+
 # Todo
 1. 음원 제작
 
