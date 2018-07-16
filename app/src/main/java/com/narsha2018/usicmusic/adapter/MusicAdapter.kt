@@ -26,7 +26,7 @@ import java.util.ArrayList
 /**
 * Created by hyunjin on 2018. 5. 11..
 */
-class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, var listener: OnPlayListener) : RecyclerView.Adapter<MusicAdapter.ItemViewHolder>() {
+class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, var listener: OnPlayListener, var isSearch: Boolean) : RecyclerView.Adapter<MusicAdapter.ItemViewHolder>() {
 
     val contexts : Context = context
     var id: String? = null
@@ -66,11 +66,11 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
 
             if(isLike){ // 좋아요 취소
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#e9e9e9")))
-                FuelUtils(contexts).deleteFavorite(mItems[position].idx)
+                FuelUtils(contexts).deleteFavorite(mItems[position].idx,isSearch)
             }
             else{ // 좋아요
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#ff0000")))
-                FuelUtils(contexts).postFavorite(mItems[position].idx)
+                FuelUtils(contexts).postFavorite(mItems[position].idx, isSearch)
             }
             isLike = !isLike
         }

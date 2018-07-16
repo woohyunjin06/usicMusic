@@ -12,7 +12,6 @@ import com.narsha2018.usicmusic.activity.*
 import com.narsha2018.usicmusic.model.LoginResponse
 import com.narsha2018.usicmusic.model.MusicResponse
 import es.dmoral.toasty.Toasty
-import org.jetbrains.anko.progressDialog
 import org.json.JSONArray
 
 class FuelUtils (private val c: Context){
@@ -22,8 +21,8 @@ class FuelUtils (private val c: Context){
     }
     fun postData(url : String, data : Any) {
         val gson = Gson()
-        var json : String = gson.toJson(data)
-        var resultJson : Any
+        val json : String = gson.toJson(data)
+        val resultJson : Any
         resultJson = if(url.contains("auth"))
             LoginResponse(600, "", "","")
         else
@@ -54,7 +53,7 @@ class FuelUtils (private val c: Context){
         }
 
     }
-    fun postFavorite(id : String) {
+    fun postFavorite(id : String, isSearch: Boolean) {
         ("/music/$id/rate").httpPost().body("{ \"username\":\""+ PreferencesUtils(c).getData("id") +"\" }", Charsets.UTF_8).header("Content-Type" to "application/json").responseJson { _, _, result ->
             when (result) {
                 is Result.Failure -> {
@@ -67,14 +66,20 @@ class FuelUtils (private val c: Context){
             }
         }
     }
-    fun deleteFavorite(id : String) {
+    fun deleteFavorite(id : String, isSearch: Boolean) {
         ("/music/$id/rate/${PreferencesUtils(c).getData("id")}").httpDelete().responseJson { _, _, result ->
             when (result) {
                 is Result.Failure -> {
-                    (c as MusicActivity).notifyFavoriteFinish(false)
+                    if(isSearch)
+                        (c as SearchActivity).notifyFavoriteFinish(false)
+                    else
+                        (c as MusicActivity).notifyFavoriteFinish(false)
                 }
                 is Result.Success -> {
-                    (c as MusicActivity).notifyFavoriteFinish(true)
+                    if(isSearch)
+                        (c as SearchActivity).notifyFavoriteFinish(true)
+                    else
+                        (c as MusicActivity).notifyFavoriteFinish(false)
 
                 }
             }

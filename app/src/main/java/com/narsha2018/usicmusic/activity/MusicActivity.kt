@@ -11,7 +11,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.widget.ImageView
-import com.google.gson.Gson
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.service.MusicService
 import com.narsha2018.usicmusic.util.DateUtils
@@ -24,10 +23,8 @@ import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 
-
 class MusicActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
-    private val gson = Gson()
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
@@ -64,7 +61,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)
 
-        adapter = MusicAdapter(mItems, this, this)
+        adapter = MusicAdapter(mItems, this, this, false)
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
     }

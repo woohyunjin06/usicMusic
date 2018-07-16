@@ -26,7 +26,6 @@ import org.json.JSONObject
 
 class SearchActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
-    private val gson = Gson()
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
@@ -63,7 +62,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)
 
-        adapter = MusicAdapter(mItems, this, this)
+        adapter = MusicAdapter(mItems, this, this, true)
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
     }
