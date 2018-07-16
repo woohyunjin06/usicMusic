@@ -7,6 +7,7 @@ import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.adapter.MusicAdapter
 import com.narsha2018.usicmusic.adapter.MusicItem
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
@@ -25,6 +26,7 @@ import org.json.JSONObject
 
 class MusicActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
+    var progressDialog : ProgressDialog? = null
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
@@ -54,6 +56,9 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         setContentView(R.layout.activity_music)
         initRecyclerView()
         Toasty.Config.reset()
+        progressDialog = ProgressDialog(this)
+        progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog!!.setMessage("Loading...")
         loadMusic()
     }
 
@@ -67,6 +72,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     }
 
     private fun loadMusic() {
+        progressDialog?.show()
         doAsync {
             fuelUtils.getMusicData(false)
         }
@@ -114,6 +120,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
             }
             uiThread {
                 adapter!!.notifyDataSetChanged()
+                progressDialog?.dismiss()
             }
         }
     }

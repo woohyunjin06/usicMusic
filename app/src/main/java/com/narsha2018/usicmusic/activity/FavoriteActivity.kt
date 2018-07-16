@@ -1,5 +1,6 @@
 package com.narsha2018.usicmusic.activity
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -23,8 +24,10 @@ import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 import java.util.*
 
@@ -50,6 +53,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
         }
     }
     val fuelUtils = FuelUtils(this)
+    var progressDialog: ProgressDialog? = null
     private val mItems = ArrayList<FavoriteItem>()
     private var adapter : FavoriteAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,45 +70,55 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
         list.addOnScrollListener(CenterScrollListener())
         layoutManager.setPostLayoutListener(CarouselZoomPostLayoutListener())
 
+        progressDialog = ProgressDialog(this)
+        progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog!!.setMessage("Loading...")
         Toasty.Config.reset()
         loadMusic()
     }
     private fun loadMusic() {
-        fuelUtils.getMusicData(true)
+        progressDialog?.show()
+        doAsync {
+            fuelUtils.getMusicData(true)
+        }
     }
 
     fun notifyFinish(musicInfo: String) {
-        val arr = JSONObject(musicInfo).getJSONArray("music")
-        var isLike = false
-        for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
-            isLike = false
-            val item: JSONObject = arr.getJSONObject(idx)
-            if (item.getBoolean("isMusic")) { // 소스가 아니고 음악이면
-                val rateArr = item.getJSONArray("rate")
-                for (idx2: Int in 0 until rateArr.length()) { // 좋아요 한 사람중 자신의 이름을 찾으면 is Like = true
-                    var authorID: String? = null
-                    val authorObject = rateArr.getJSONObject(idx2)
-                    if (authorObject.has("username"))
-                        authorID = authorObject.getString("username")
-                    if (authorID != null && authorID == PreferencesUtils(this).getData("id"))
-                        if(item.has("artist"))
-                            mItems.add(FavoriteItem(item.getString("title"),
-                                    DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://10.80.162.221:3000/" + item.getString("music"),
-                                    "http://10.80.162.221:3000/" + item.getString("cover"),
-                                    item.getString("artist")
-                            ))
-                        else
-                            mItems.add(FavoriteItem(item.getString("title"),
-                                    DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://10.80.162.221:3000/" + item.getString("music"),
-                                    "http://10.80.162.221:3000/" + item.getString("cover"),
-                                    "No Artist"
-                            ))
+        doAsync {
+            val arr = JSONObject(musicInfo).getJSONArray("music")
+            for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
+                val item: JSONObject = arr.getJSONObject(idx)
+                if (item.getBoolean("isMusic")) { // 소스가 아니고 음악이면
+                    val rateArr = item.getJSONArray("rate")
+                    for (idx2: Int in 0 until rateArr.length()) { // 좋아요 한 사람중 자신의 이름을 찾으면 is Like = true
+                        var authorID: String? = null
+                        val authorObject = rateArr.getJSONObject(idx2)
+                        if (authorObject.has("username"))
+                            authorID = authorObject.getString("username")
+                        if (authorID != null && authorID == PreferencesUtils(this@FavoriteActivity).getData("id"))
+                            if (item.has("artist"))
+                                uiThread {
+                                    mItems.add(FavoriteItem(item.getString("title"),
+                                            DateUtils.fromISO(item.getString("date"))!!,
+                                            "http://10.80.162.221:3000/" + item.getString("music"),
+                                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                                            item.getString("artist")
+                                    ))
+                                }
+                            else
+                                uiThread {
+                                    mItems.add(FavoriteItem(item.getString("title"),
+                                            DateUtils.fromISO(item.getString("date"))!!,
+                                            "http://10.80.162.221:3000/" + item.getString("music"),
+                                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                                            "No Artist"
+                                    ))
+                                }
 
+                    }
                 }
             }
+            adapter!!.notifyDataSetChanged()
         }
-        adapter!!.notifyDataSetChanged()
     }
 }
