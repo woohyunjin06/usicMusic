@@ -3,7 +3,7 @@
 
 # Skill
 * 서버통신 : Fuel
-* 스트리밍 : MediaPlayer
+* 실시간 음원 스트리밍 : MediaPlayer with Foreground Service
 
 # Todo
 1. 음원 제작
