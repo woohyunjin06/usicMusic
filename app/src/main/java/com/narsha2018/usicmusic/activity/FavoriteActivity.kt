@@ -1,5 +1,6 @@
 package com.narsha2018.usicmusic.activity
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -118,7 +119,16 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                     }
                 }
             }
-            adapter!!.notifyDataSetChanged()
+            uiThread {
+                progressDialog?.dismiss()
+                adapter!!.notifyDataSetChanged()
+            }
         }
+    }
+    override fun onBackPressed() {
+        val returnIntent = Intent()
+        returnIntent.putExtra("activity", "favorite")
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
     }
 }

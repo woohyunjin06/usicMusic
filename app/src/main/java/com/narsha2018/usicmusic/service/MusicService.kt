@@ -44,7 +44,6 @@ class MusicService : Service() {
                     .setContentTitle(song)
                     .setContentIntent(pendingIntent)
                     .setOngoing(true)
-                    .setContentText("playing")
             mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             mNotifyManager!!.notify(1, mBuilder.build())
 
