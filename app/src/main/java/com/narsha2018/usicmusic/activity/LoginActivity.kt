@@ -17,12 +17,15 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 import es.dmoral.toasty.Toasty
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.progressDialog
+import org.jetbrains.anko.uiThread
 
 
 class LoginActivity : AppCompatActivity() {
 
     val gson = Gson()
+    var progressDialog : ProgressDialog? = null
     private val fuelUtil = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
         val btmBitmap: Bitmap = BitmapUtils.blurBitmap(this, btmDrawable.bitmap, 25)
         val resultDrawable = BitmapDrawable(resources, btmBitmap)
         logo_login.background = resultDrawable
+        progressDialog = ProgressDialog(this)
+        progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog!!.setMessage("Loading...")
         Toasty.Config.reset()
         go.onClick{ doLogin() }
         start.onClick { startActivity<RegisterActivity>() }
@@ -42,23 +48,35 @@ class LoginActivity : AppCompatActivity() {
             Toasty.warning(this, "Please type id and password.").show()
             return
         }
-        fuelUtil.postData("/auth/login", LoginRequest(id, pw))
+        progressDialog?.show()
+        doAsync {
+            fuelUtil.postData("/auth/login", LoginRequest(id, pw))
+        }
     }
 
     fun notifyFinish(accountResponse : String){
-        val resultJson : LoginResponse = gson.fromJson(accountResponse,LoginResponse::class.java)
-        if(resultJson.status==200 && resultJson.message.trim()!=""){ // success
-            PreferencesUtils(this).apply{
-                saveData("token",resultJson.token)
-                saveData("id", id.text.toString())
-                saveData("nick", resultJson.nickname)
+        doAsync {
+            val resultJson: LoginResponse = gson.fromJson(accountResponse, LoginResponse::class.java)
+            if (resultJson.status == 200 && resultJson.message.trim() != "") { // success
+                PreferencesUtils(this@LoginActivity).apply {
+                    saveData("token", resultJson.token)
+                    saveData("id", id.text.toString())
+                    saveData("nick", resultJson.nickname)
+                }
+                uiThread {
+                    Toasty.success(it, resultJson.message).show()
+                    it.startActivity<MainActivity>()
+                    it.finish()
+                }
+            } else {
+                uiThread {
+                    Toasty.error(it, "비밀번호를 확인해주세요").show()
+                    pw.setText("")
+                }
             }
-            Toasty.success(this, resultJson.message).show()
-            startActivity<MainActivity>()
-            finish()
-        } else{
-            Toasty.error(this, "비밀번호를 확인해주세요").show()
-            pw.setText("")
+            uiThread {
+                progressDialog?.dismiss()
+            }
         }
     }
 }
