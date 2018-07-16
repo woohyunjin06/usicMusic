@@ -53,10 +53,9 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
     private var adapter: MusicAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_music)
+        setContentView(R.layout.activity_search)
         initRecyclerView()
         Toasty.Config.reset()
-        loadMusic()
         btn_search.onClick { loadMusic() }
     }
 
@@ -92,14 +91,25 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
                     if (authorID != null && authorID == PreferencesUtils(this).getData("id"))
                         isLike = true
                 }
-                mItems.add(MusicItem(item.getString("_id"),
-                        item.getString("title"),
-                        DateUtils.fromISO(item.getString("date"))!!,
-                        "http://10.80.162.221:3000/" + item.getString("music"),
-                        "http://10.80.162.221:3000/" + item.getString("cover"),
-                        isLike,
-                        item.getString("artist")
-                ))
+
+                if(item.has("artist"))
+                    mItems.add(MusicItem(item.getString("_id"),
+                            item.getString("title"),
+                            DateUtils.fromISO(item.getString("date"))!!,
+                            "http://10.80.162.221:3000/" + item.getString("music"),
+                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                            isLike,
+                            item.getString("artist")
+                    ))
+                else
+                    mItems.add(MusicItem(item.getString("_id"),
+                            item.getString("title"),
+                            DateUtils.fromISO(item.getString("date"))!!,
+                            "http://10.80.162.221:3000/" + item.getString("music"),
+                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                            isLike,
+                            "No Artist"
+                    ))
             }
         }
         adapter!!.notifyDataSetChanged()

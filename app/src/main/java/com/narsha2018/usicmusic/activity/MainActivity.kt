@@ -3,6 +3,7 @@ package com.narsha2018.usicmusic.activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -21,15 +22,18 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import com.narsha2018.usicmusic.view.MediaPlayer
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
 
+@Suppress("DEPRECATION") // for progressDialog
 class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
 
     val fuelUtils = FuelUtils(this)
     val mediaPlayer : MediaPlayer = MediaPlayer()
+    var progressDialog: ProgressDialog? = null
 
     override fun onClickPlay(idx: String?,title: String, uri: String, btn: ImageView) {
         mediaPlayer.playMusic(uri) //return boolean
@@ -50,8 +54,12 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
         mediaPlayer.init()
         if(PreferencesUtils(this).getData("notificationChannel")!="yes")
             createNotificationChannel()
+        progressDialog = ProgressDialog(this)
+        progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog!!.setMessage("Loading...")
         music.onClick { startActivity<MusicActivity>() }
         favorite.onClick { startActivity<FavoriteActivity>()}
+        find.onClick { startActivity<SearchActivity>()}
         loadRank()
     }
     private fun createNotificationChannel() {
@@ -67,7 +75,10 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
         }
     }
     private fun loadRank() {
-        fuelUtils.getRankData()
+        progressDialog?.show()
+        doAsync {
+            fuelUtils.getRankData()
+        }
     }
 
     fun notifyFinish(rankInfo: String) {
@@ -109,9 +120,18 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
         musicTitle2.text = objectB?.getString("title")
         musicTitle3.text = objectC?.getString("title")
 
-        artist1.text = objectA?.getString("artist")
-        artist2.text = objectB?.getString("artist")
-        artist3.text = objectC?.getString("artist")
+        if(objectA!!.has("artist"))
+            artist1.text = objectA.getString("artist")
+        else
+            artist1.text = "No Artist"
+        if(objectB!!.has("artist"))
+            artist2.text = objectB.getString("artist")
+        else
+            artist2.text = "No Artist"
+        if(objectC!!.has("artist"))
+            artist3.text = objectC.getString("artist")
+        else
+            artist3.text = "No Artist"
         if(objectA!=null)
         Glide.with(this)
                 .load("http://10.80.162.221:3000/"+objectA.getString("cover"))
@@ -136,6 +156,7 @@ class MainActivity : AppCompatActivity(), OnPlayListener{ //rank activity
                         .error(R.mipmap.ic_launcher) //실패
                         .fallback(R.mipmap.ic_launcher)) //없음
                 .into(profile3_img)
+        progressDialog?.dismiss()
     }
     /*override fun onActivityResult(requestCode : Int, resultCode : Int, data : Intent) {
 

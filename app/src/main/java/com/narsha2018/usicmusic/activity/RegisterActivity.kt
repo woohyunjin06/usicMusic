@@ -1,5 +1,6 @@
 package com.narsha2018.usicmusic.activity
 
+import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.narsha2018.usicmusic.R
@@ -15,13 +16,16 @@ import com.narsha2018.usicmusic.util.BitmapUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_register.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.uiThread
 
 
 class RegisterActivity : AppCompatActivity() {
 
     val gson = Gson()
+    var progressDialog : ProgressDialog? = null
     private val fuelUtil = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,9 @@ class RegisterActivity : AppCompatActivity() {
         val resultDrawable = BitmapDrawable(resources, btmBitmap)
         logo_login.background = resultDrawable
         Toasty.Config.reset()
+        progressDialog = ProgressDialog(this)
+        progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog!!.setMessage("Loading...")
 
         back.onClick { finish() }
         start.onClick{ doRegister() }
@@ -43,19 +50,28 @@ class RegisterActivity : AppCompatActivity() {
             Toasty.warning(this, "Please type your id or password").show()
             return
         }
-        fuelUtil.postData("/auth/register", RegisterRequest(strId, strPw, strNick))
+        progressDialog?.show()
+        doAsync {
+            fuelUtil.postData("/auth/register", RegisterRequest(strId, strPw, strNick))
+        }
     }
 
     fun notifyFinish(accountResponse : String){
-        val resultJson : RegisterResponse = gson.fromJson(accountResponse, RegisterResponse::class.java)
-        if(resultJson.status==200 && resultJson.message.trim()!=""){
-            Toasty.success(this, resultJson.message).show()
-            startActivity<LoginActivity>()
-            finish()
-        } else {
-            Toasty.error(this, "ID가 중복되었습니다.").show()
-            id.setText("")
-            nick.setText("")
+        doAsync {
+            val resultJson: RegisterResponse = gson.fromJson(accountResponse, RegisterResponse::class.java)
+            if (resultJson.status == 200 && resultJson.message.trim() != "") {
+                uiThread {
+                    Toasty.success(it, resultJson.message).show()
+                    it.startActivity<LoginActivity>()
+                    it.finish()
+                }
+            } else {
+                uiThread {
+                    Toasty.error(it, "ID가 중복되었습니다.").show()
+                    it.id.setText("")
+                    it.nick.setText("")
+                }
+            }
         }
     }
 }

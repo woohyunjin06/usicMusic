@@ -19,6 +19,7 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_music.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
 import org.json.JSONObject
 
@@ -68,7 +69,9 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     }
 
     private fun loadMusic() {
-        fuelUtils.getMusicData(false)
+        doAsync {
+            fuelUtils.getMusicData(false)
+        }
     }
 
     fun notifyFinish(musicInfo: String) {
@@ -86,14 +89,24 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                     if (authorID != null && authorID == PreferencesUtils(this).getData("id"))
                         isLike = true
                 }
-                mItems.add(MusicItem(item.getString("_id"),
-                        item.getString("title"),
-                        DateUtils.fromISO(item.getString("date"))!!,
-                        "http://10.80.162.221:3000/" + item.getString("music"),
-                        "http://10.80.162.221:3000/" + item.getString("cover"),
-                        isLike,
-                        item.getString("artist")
-                        ))
+                if(item.has("artist"))
+                    mItems.add(MusicItem(item.getString("_id"),
+                            item.getString("title"),
+                            DateUtils.fromISO(item.getString("date"))!!,
+                            "http://10.80.162.221:3000/" + item.getString("music"),
+                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                            isLike,
+                            item.getString("artist")
+                            ))
+                else
+                    mItems.add(MusicItem(item.getString("_id"),
+                            item.getString("title"),
+                            DateUtils.fromISO(item.getString("date"))!!,
+                            "http://10.80.162.221:3000/" + item.getString("music"),
+                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                            isLike,
+                            "No Artist"
+                    ))
             }
         }
         adapter!!.notifyDataSetChanged()

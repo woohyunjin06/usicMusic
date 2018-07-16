@@ -25,6 +25,7 @@
         <activity android:name=".activity.FavoriteActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.SearchActivity" />
 
         <service
             android:name=".service.MusicService"

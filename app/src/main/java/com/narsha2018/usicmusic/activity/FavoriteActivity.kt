@@ -87,12 +87,21 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                     if (authorObject.has("username"))
                         authorID = authorObject.getString("username")
                     if (authorID != null && authorID == PreferencesUtils(this).getData("id"))
-                        mItems.add(FavoriteItem(item.getString("title"),
-                                DateUtils.fromISO(item.getString("date"))!!,
-                                "http://10.80.162.221:3000/" + item.getString("music"),
-                                "http://10.80.162.221:3000/" + item.getString("cover"),
-                                item.getString("artist")
-                        ))
+                        if(item.has("artist"))
+                            mItems.add(FavoriteItem(item.getString("title"),
+                                    DateUtils.fromISO(item.getString("date"))!!,
+                                    "http://10.80.162.221:3000/" + item.getString("music"),
+                                    "http://10.80.162.221:3000/" + item.getString("cover"),
+                                    item.getString("artist")
+                            ))
+                        else
+                            mItems.add(FavoriteItem(item.getString("title"),
+                                    DateUtils.fromISO(item.getString("date"))!!,
+                                    "http://10.80.162.221:3000/" + item.getString("music"),
+                                    "http://10.80.162.221:3000/" + item.getString("cover"),
+                                    "No Artist"
+                            ))
+
                 }
             }
         }
