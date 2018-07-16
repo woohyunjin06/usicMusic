@@ -8,9 +8,14 @@ import com.narsha2018.usicmusic.adapter.MusicAdapter
 import com.narsha2018.usicmusic.adapter.MusicItem
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.graphics.drawable.Drawable
+import android.os.IBinder
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.widget.ImageView
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.service.MusicService
@@ -25,18 +30,29 @@ import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 
 class MusicActivity : AppCompatActivity(), OnPlayListener {
-    private var isPlaying = false
     var progressDialog : ProgressDialog? = null
+
+
+    var btn_prev : ImageView? = null
+    private var isPlaying = false
+    var titles : String? = null
+    var uris : String? = null
+
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
+            if(btn_prev!=null)
+                btn_prev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
             isPlaying = true
+            titles = title
+            uris = uri
 
             val i = Intent(this, MusicService::class.java)
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
             startService(i)
+            btn_prev = btn
         } else { //끄기
             btn.imageResource = R.drawable.ic_play
             isPlaying = false
@@ -133,7 +149,9 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     override fun onBackPressed() {
         val returnIntent = Intent()
         returnIntent.putExtra("isPlaying", isPlaying)
-        setResult(Activity.RESULT_CANCELED, returnIntent)
+        returnIntent.putExtra("songUrl", uris)
+        returnIntent.putExtra("songTitle", titles)
+        setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
 }

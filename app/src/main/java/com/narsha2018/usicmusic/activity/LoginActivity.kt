@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         Toasty.Config.reset()
         go.onClick{ doLogin() }
         start.onClick { startActivity<RegisterActivity>() }
+        back.onClick{ onBackPressed() }
     }
     private fun doLogin() {
         val id: String = id.text.toString()
@@ -50,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         }
         progressDialog?.show()
         doAsync {
-            fuelUtil.postData("/auth/login", LoginRequest(id, pw))
+            fuelUtil.postData("/auth/login", LoginRequest(id, pw), false)
         }
     }
 
@@ -61,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 PreferencesUtils(this@LoginActivity).apply {
                     saveData("token", resultJson.token)
                     saveData("id", id.text.toString())
+                    saveData("pw", pw.text.toString())
                     saveData("nick", resultJson.nickname)
                 }
                 uiThread {

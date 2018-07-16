@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.azoft.carousellayoutmanager.CarouselLayoutManager
@@ -33,19 +34,26 @@ import org.json.JSONObject
 import java.util.*
 
 class FavoriteActivity : AppCompatActivity(), OnPlayListener {
+    private var isPlaying = false
+    var titles : String? = null
+    var uris : String? = null
+    var btn_prev : ImageView? = null
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
+            if(btn_prev!=null)
+                btn_prev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
-            //isPlaying = true
-
+            isPlaying = true
+            titles = title
+            uris = uri
             val i = Intent(this, MusicService::class.java)
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
             startService(i)
+            btn_prev = btn
         } else { //끄기
             btn.imageResource = R.drawable.ic_play
-            //isPlaying = false
 
             val i = Intent(this, MusicService::class.java)
             i.putExtra(MusicService.SONG_NAME, title)
@@ -127,7 +135,9 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
     }
     override fun onBackPressed() {
         val returnIntent = Intent()
-        returnIntent.putExtra("activity", "favorite")
+        returnIntent.putExtra("isPlaying", isPlaying)
+        returnIntent.putExtra("songUrl", uris)
+        returnIntent.putExtra("songTitle", titles)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }

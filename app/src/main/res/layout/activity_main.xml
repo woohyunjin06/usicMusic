@@ -118,7 +118,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/ic_launcher" />
 
 
         </FrameLayout>
@@ -150,10 +150,10 @@
                         android:id="@+id/musicTitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30sp"
-                        android:text="title"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#595959"/>
+                        android:text="title"
+                        android:textColor="#595959"
+                        android:textSize="30sp" />
 
 
                     <TextView
@@ -174,7 +174,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/ic_launcher" />
 
 
         </FrameLayout>
@@ -208,10 +208,10 @@
                         android:id="@+id/musicTitle3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30sp"
-                        android:text="title"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#595959"/>
+                        android:text="title"
+                        android:textColor="#595959"
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/artist3"
@@ -231,7 +231,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/ic_launcher" />
 
         </FrameLayout>
 
@@ -349,7 +349,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:text="Song name"
+            android:text="Select music"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
@@ -366,24 +366,15 @@
             android:orientation="horizontal">
 
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_pre" />
 
             <ImageView
+                android:id="@+id/btn_play"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/ic_play" />
 
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_next" />
 
         </LinearLayout>
 

@@ -43,9 +43,9 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
         Glide.with(contexts)
                 .load(mItems[position].thumbnailUri)
                 .apply(RequestOptions()
-                        .placeholder(R.mipmap.ic_launcher) //로딩
-                        .error(R.mipmap.ic_launcher) //실패
-                        .fallback(R.mipmap.ic_launcher)) //없음
+                        .placeholder(R.drawable.ic_launcher) //로딩
+                        .error(R.drawable.ic_launcher) //실패
+                        .fallback(R.drawable.ic_launcher)) //없음
                 .into(holder.thumbnail)
         holder.btn.onClick { listener.onClickPlay(null, mItems[position].musicTitle, mItems[position].musicUri, holder.btn) }
     }

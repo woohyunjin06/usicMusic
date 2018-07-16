@@ -11,6 +11,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.widget.ImageView
 import com.google.gson.Gson
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
@@ -19,6 +20,7 @@ import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_entrance.*
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
@@ -30,12 +32,20 @@ import org.json.JSONObject
 class SearchActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
     var progressDialog : ProgressDialog? = null
+
+    var btn_prev : ImageView? = null
+
+    var titles : String? = null
+    var uris : String? = null
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
+            if(btn_prev!=null)
+                btn_prev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
             isPlaying = true
-
+            titles = title
+            uris = uri
             val i = Intent(this, MusicService::class.java)
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
@@ -126,6 +136,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
                 }
             }
             uiThread {
+                progressDialog?.dismiss()
                 adapter!!.notifyDataSetChanged()
             }
         }
@@ -139,7 +150,9 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
     override fun onBackPressed() {
         val returnIntent = Intent()
         returnIntent.putExtra("isPlaying", isPlaying)
-        setResult(Activity.RESULT_CANCELED, returnIntent)
+        returnIntent.putExtra("songUrl", uris)
+        returnIntent.putExtra("songTitle", titles)
+        setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
 }

@@ -52,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         progressDialog?.show()
         doAsync {
-            fuelUtil.postData("/auth/register", RegisterRequest(strId, strPw, strNick))
+            fuelUtil.postData("/auth/register", RegisterRequest(strId, strPw, strNick), false)
         }
     }
 

@@ -19,7 +19,7 @@ class FuelUtils (private val c: Context){
         Toasty.Config.reset()
         FuelManager.instance.basePath = "http://10.80.162.221:3000/api"
     }
-    fun postData(url : String, data : Any) {
+    fun postData(url : String, data : Any, isEntrance: Boolean) {
         val gson = Gson()
         val json : String = gson.toJson(data)
         val resultJson : Any
@@ -31,7 +31,10 @@ class FuelUtils (private val c: Context){
             when (result) {
                 is Result.Failure -> {
                     if(url.contains("login")) {
-                        (c as LoginActivity).notifyFinish(gson.toJson(resultJson))
+                        if(isEntrance)
+                            (c as EntranceActivity).notifyFinish(gson.toJson(resultJson))
+                        else
+                            (c as LoginActivity).notifyFinish(gson.toJson(resultJson))
                     }
                     else if(url.contains("register")) {
                         (c as RegisterActivity).notifyFinish(gson.toJson(resultJson))
@@ -41,7 +44,10 @@ class FuelUtils (private val c: Context){
                     if(url.contains("auth")) {
                         //
                         if (url.contains("login")) {
-                            (c as LoginActivity).notifyFinish(result.get().content)
+                            if(isEntrance)
+                                (c as EntranceActivity).notifyFinish(result.get().content)
+                            else
+                                (c as LoginActivity).notifyFinish(result.get().content)
                         }
                         if (url.contains("register")) {
                             (c as RegisterActivity).notifyFinish(result.get().content)

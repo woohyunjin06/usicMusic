@@ -18,7 +18,7 @@
             android:layout_margin="30dp"
             android:layout_gravity="center_horizontal"
             android:elevation="5dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_launcher"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

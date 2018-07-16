@@ -53,6 +53,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/container_bottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
@@ -66,7 +67,14 @@
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
                 android:text="Let's feeling"
+                android:visibility="gone"
                 android:textAllCaps="false" />
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </LinearLayout>

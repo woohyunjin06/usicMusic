@@ -5,7 +5,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 
 class MediaPlayer : MediaPlayer() {
-    fun init() {
+    fun init( ) {
         setAudioAttributes(AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setLegacyStreamType(AudioManager.STREAM_MUSIC)

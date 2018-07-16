@@ -31,9 +31,11 @@
 
 
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_crown" />
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_record" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,8 +63,5 @@
         android:layout_weight="2"
         android:orientation="horizontal">
 
-
-
     </LinearLayout>
-
 </LinearLayout>
