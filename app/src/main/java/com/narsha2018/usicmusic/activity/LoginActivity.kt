@@ -7,6 +7,8 @@ import com.narsha2018.usicmusic.R
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
+import android.view.KeyEvent
+import android.view.View
 import com.google.gson.Gson
 import com.narsha2018.usicmusic.model.LoginRequest
 import com.narsha2018.usicmusic.model.LoginResponse
@@ -41,6 +43,15 @@ class LoginActivity : AppCompatActivity() {
         go.onClick{ doLogin() }
         start.onClick { startActivity<RegisterActivity>() }
         back.onClick{ onBackPressed() }
+        pw.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(p0: View?, p1: Int, p2: KeyEvent?): Boolean {
+                if ((p2!!.getAction() == KeyEvent.ACTION_DOWN) && (p1 == KeyEvent.KEYCODE_ENTER)) {
+                    doLogin()
+                    return true
+                }
+                return false
+            }
+        })
     }
     private fun doLogin() {
         val id: String = id.text.toString()

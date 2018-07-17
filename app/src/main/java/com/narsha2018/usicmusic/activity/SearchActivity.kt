@@ -12,6 +12,8 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.view.KeyEvent
+import android.view.View
 import android.widget.ImageView
 import com.google.gson.Gson
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
@@ -21,6 +23,7 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_entrance.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
@@ -73,6 +76,13 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
         btn_search.onClick { loadMusic() }
+        edt_search.setOnKeyListener(View.OnKeyListener { p0, p1, p2 ->
+            if ((p2!!.action == KeyEvent.ACTION_DOWN) && (p1 == KeyEvent.KEYCODE_ENTER)) {
+                loadMusic()
+                return@OnKeyListener true
+            }
+            false
+        })
     }
 
     private fun initRecyclerView() { // RecyclerView 기본세팅

@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
         music.onClick { startActivityForResult<MusicActivity>(1) }
         favorite.onClick { startActivityForResult<FavoriteActivity>(1) }
         find.onClick { startActivityForResult<SearchActivity>(1) }
+        community.onClick { startActivity<CommunityActivity>() }
         loadRank()
     }
 
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
 
     fun notifyFinish(rankInfo: String) {
         val arr = JSONObject(rankInfo).getJSONArray("music")
+        Log.d("ARRAY", arr.toString())
         var a = 0
         var b = 0
         var c = 0
@@ -104,7 +106,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             val item: JSONObject = arr.getJSONObject(idx)
             if (item.getBoolean("isMusic")) { // 소스가 아니고 음악이면
                 val rateArr = item.getJSONArray("rate")
-                val count = rateArr.length()
+                val count = rateArr.length() // 좋아요 갯수를 가져옴
                 if (count > a) {
                     c = b
                     objectC = objectB
@@ -113,19 +115,16 @@ class MainActivity : AppCompatActivity(){ //rank activity
                     a = count
                     objectA = item
                 }
-                else if (count in (b)..(a)) {
+                else if (count in (b)..(a + 1)) {
                     c = b
                     objectC = objectB
                     b = count
                     objectB = item
-
                 }
-                if (count in (c)..(b)) {
+                else if (count in (c)..(b + 1)) {
                     c = count
                     objectC = item
                 }
-
-
             }
         }
         musicTitle1.text = objectA?.getString("title")
@@ -171,6 +170,12 @@ class MainActivity : AppCompatActivity(){ //rank activity
                             .fallback(R.drawable.ic_launcher)) //없음
                     .into(profile3_img)
         }
+        if(musicTitle1.text.trim()=="")
+            musicTitle1.text = "No Music"
+        if(musicTitle2.text.trim()=="")
+            musicTitle2.text = "No Music"
+        if(musicTitle3.text.trim()=="")
+            musicTitle3.text = "No Music"
         progressDialog?.dismiss()
     }
 

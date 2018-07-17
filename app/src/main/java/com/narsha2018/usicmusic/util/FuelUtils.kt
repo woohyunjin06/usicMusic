@@ -112,6 +112,22 @@ class FuelUtils (private val c: Context){
             }
         }
     }
+
+    fun getShare() {
+        val gson = Gson()
+        val resultJson = MusicResponse(true, "error", "", "", JSONArray(), "","","")
+        "/board".httpGet().responseJson { _, _, result ->
+            when (result) {
+                is Result.Failure -> {
+                    (c as CommunityActivity).notifyFinish(gson.toJson(resultJson))
+                }
+                is Result.Success -> {
+                    (c as CommunityActivity).notifyFinish(result.get().content)
+                }
+            }
+        }
+    }
+
     fun getRankData() {
         val gson = Gson()
         val resultJson = MusicResponse(true, "error", "", "", JSONArray(), "","","")

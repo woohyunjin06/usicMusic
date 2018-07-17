@@ -95,7 +95,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="title"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:text="No Music"
                         android:textColor="#595959"
                         android:textSize="30sp" />
 
@@ -105,8 +107,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="artist"
-                        android:textColor="#595959"/>
+                        android:text="No Artist"
+                        android:textColor="#595959" />
 
                 </LinearLayout>
 
@@ -151,7 +153,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="title"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:text="No Music"
                         android:textColor="#595959"
                         android:textSize="30sp" />
 
@@ -161,8 +165,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="artist"
-                        android:textColor="#595959"/>
+                        android:text="No Artist"
+                        android:textColor="#595959" />
 
                 </LinearLayout>
 
@@ -209,7 +213,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="title"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:text="No Music"
                         android:textColor="#595959"
                         android:textSize="30sp" />
 
@@ -218,8 +224,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="artist"
-                        android:textColor="#595959"/>
+                        android:text="No Artist"
+                        android:textColor="#595959" />
 
                 </LinearLayout>
 
@@ -249,15 +255,15 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:focusable="true"
-            android:clickable="true"
             android:id="@+id/favorite"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_rectangle_cherry"
+            android:clickable="true"
             android:elevation="10dp"
+            android:focusable="true"
             android:orientation="vertical"
             android:padding="25dp">
 
@@ -274,16 +280,16 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:focusable="true"
-            android:clickable="true"
             android:id="@+id/music"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_rectangle_banana"
+            android:clickable="true"
             android:elevation="10dp"
+            android:focusable="true"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -300,16 +306,16 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:focusable="true"
-            android:clickable="true"
             android:id="@+id/find"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_rectangle_melon"
+            android:clickable="true"
             android:elevation="10dp"
+            android:focusable="true"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -320,12 +326,36 @@
 
         </LinearLayout>
 
-
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <LinearLayout
+            android:id="@+id/community"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_rectangle_blue"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -366,14 +396,12 @@
             android:orientation="horizontal">
 
 
-
             <ImageView
                 android:id="@+id/btn_play"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/ic_play" />
-
 
 
         </LinearLayout>
