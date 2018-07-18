@@ -1,6 +1,7 @@
 package com.narsha2018.usicmusic.util
 
 import android.content.Context
+import android.preference.Preference
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpDelete
@@ -38,6 +39,10 @@ class FuelUtils (private val c: Context){
                     }
                     else if(url.contains("register")) {
                         (c as RegisterActivity).notifyFinish(gson.toJson(resultJson))
+                    } else if(url.contains("comment")){
+                        (c as DetailActivity).notifyCommentFinish(gson.toJson(resultJson))
+                    }else if(url.contains("write")){
+                        (c as WriteActivity).notifyFinish(gson.toJson(resultJson))
                     }
                 }
                 is Result.Success -> {
@@ -49,9 +54,13 @@ class FuelUtils (private val c: Context){
                             else
                                 (c as LoginActivity).notifyFinish(result.get().content)
                         }
-                        if (url.contains("register")) {
+                        else if (url.contains("register")) {
                             (c as RegisterActivity).notifyFinish(result.get().content)
                         }
+                    }else if(url.contains("comment")){
+                        (c as DetailActivity).notifyCommentFinish(result.get().content)
+                    }else if(url.contains("board")){
+                        (c as WriteActivity).notifyFinish(result.get().content)
                     }
 
                 }
@@ -152,6 +161,34 @@ class FuelUtils (private val c: Context){
                 }
                 is Result.Success -> {
                     (c as SearchActivity).notifyFinish(result.get().content, keyword)
+                }
+            }
+        }
+    }
+    fun getBoardContent(id: String){
+        val gson = Gson()
+        val resultJson = MusicResponse(true, "error", "", "", JSONArray(), "","","")
+        "/board/$id".httpGet().responseJson { _, _, result ->
+            when (result) {
+                is Result.Failure -> {
+                    (c as DetailActivity).notifyFinish(gson.toJson(resultJson))
+                }
+                is Result.Success -> {
+                    (c as DetailActivity).notifyFinish(result.get().content)
+                }
+            }
+        }
+    }
+    fun deleteComment(id: String, bid: String){
+        val gson = Gson()
+        val resultJson = MusicResponse(true, "error", "", "", JSONArray(), "","","")
+        "/board/$bid/comment/$id".httpDelete().responseJson { _, _, result ->
+            when (result) {
+                is Result.Failure -> {
+                    //(c as DetailActivity).notifyFinish(gson.toJson(resultJson))
+                }
+                is Result.Success -> {
+                    //(c as DetailActivity).notifyFinish(result.get().content)
                 }
             }
         }

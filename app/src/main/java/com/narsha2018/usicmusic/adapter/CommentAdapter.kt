@@ -6,8 +6,10 @@ import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
+import android.preference.Preference
 import android.support.v4.widget.ImageViewCompat
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,12 +38,12 @@ class CommentAdapter(private var mItems: ArrayList<CommentItem>, context : Conte
     val contexts : Context = context
     var id: String? = null
     var nick: String? = null
+    val fuelUtils = FuelUtils(context)
     // 새로운 뷰 홀더 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chart, parent, false)
-        val sharedPreferences : SharedPreferences = contexts.getSharedPreferences("user", Activity.MODE_PRIVATE)
-        id = sharedPreferences.getString("id", null)
-        nick = sharedPreferences.getString("nick", null)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
+        id = PreferencesUtils(contexts).getData("id")
+        nick = PreferencesUtils(contexts).getData("nick")
 
         return ItemViewHolder(view)
     }
@@ -51,9 +53,14 @@ class CommentAdapter(private var mItems: ArrayList<CommentItem>, context : Conte
         holder.name.text = mItems[position].name
         holder.content.text = mItems[position].content
         holder.itemView.setOnClickListener {
-            if(holder.name.text == nick){
+            if(holder.name.text == id){
                 contexts.alert("정말로 삭제하시겠습니까?"){
-                    yesButton {  } // 삭제
+                    also {
+                        ctx.setTheme(R.style.CustomAlertDialog)
+                    }
+                    yesButton { fuelUtils.deleteComment(mItems[position].cid, mItems[position].bid)
+                    mItems.removeAt(position)
+                    notifyDataSetChanged()} // 삭제
                     noButton {  }
                 }.show()
             }
@@ -73,4 +80,4 @@ class CommentAdapter(private var mItems: ArrayList<CommentItem>, context : Conte
     }
 }
 
-class CommentItem(val cid: String, val content: String, val name: String)
+class CommentItem(val bid: String, val cid: String, val content: String, val name: String)

@@ -95,11 +95,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="12dp"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
                         android:text="No Music"
                         android:textColor="#595959"
-                        android:textSize="30sp" />
+                        android:textSize="12sp" />
 
 
                     <TextView
@@ -107,8 +108,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
                         android:text="No Artist"
-                        android:textColor="#595959" />
+                        android:textColor="#595959"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -153,11 +157,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="12dp"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
                         android:text="No Music"
                         android:textColor="#595959"
-                        android:textSize="30sp" />
+                        android:textSize="12sp" />
 
 
                     <TextView
@@ -165,8 +170,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
                         android:text="No Artist"
-                        android:textColor="#595959" />
+                        android:textColor="#595959"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -213,19 +221,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="12dp"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
                         android:text="No Music"
                         android:textColor="#595959"
-                        android:textSize="30sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/artist3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
                         android:text="No Artist"
-                        android:textColor="#595959" />
+                        android:textColor="#595959"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -348,7 +360,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_search" />
+                android:src="@drawable/ic_community" />
 
         </LinearLayout>
 

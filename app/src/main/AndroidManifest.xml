@@ -23,6 +23,8 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.MusicActivity" />
         <activity android:name=".activity.CommunityActivity" />
+        <activity android:name=".activity.WriteActivity" />
+        <activity android:name=".activity.DetailActivity" />
         <activity android:name=".activity.FavoriteActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
