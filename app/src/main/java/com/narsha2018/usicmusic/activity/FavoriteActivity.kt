@@ -7,28 +7,24 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.azoft.carousellayoutmanager.CarouselLayoutManager
-import com.narsha2018.usicmusic.R
-import kotlinx.android.synthetic.main.activity_favorite.*
-import com.azoft.carousellayoutmanager.CenterScrollListener
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener
-import com.azoft.carousellayoutmanager.DefaultChildSelectionListener
+import com.azoft.carousellayoutmanager.CenterScrollListener
+import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.adapter.FavoriteAdapter
 import com.narsha2018.usicmusic.adapter.FavoriteItem
-import com.narsha2018.usicmusic.adapter.MusicItem
 import com.narsha2018.usicmusic.service.MusicService
 import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_favorite.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 import java.util.*
@@ -40,7 +36,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
     var btn_prev : ImageView? = null
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
-        if (btn.drawable.constantState == play?.constantState) { // 켜기
+        if (btn.drawable.constantState == play?.constantState) {
             if(btn_prev!=null)
                 btn_prev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
@@ -52,7 +48,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
             i.putExtra(MusicService.SONG_URL, uri)
             startService(i)
             btn_prev = btn
-        } else { //끄기
+        } else {
             btn.imageResource = R.drawable.ic_play
 
             val i = Intent(this, MusicService::class.java)
