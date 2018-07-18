@@ -59,6 +59,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
             stopService(i)
+            isPlaying = false
         }
     }
     val fuelUtils = FuelUtils(this)
@@ -95,6 +96,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
     fun notifyFinish(musicInfo: String) {
         doAsync {
             val arr = JSONObject(musicInfo).getJSONArray("music")
+            Log.d("ARRAY", arr.toString())
             for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
                 val item: JSONObject = arr.getJSONObject(idx)
                 if (item.getBoolean("isMusic")) { // 소스가 아니고 음악이면
@@ -127,7 +129,16 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                     }
                 }
             }
+
             uiThread {
+                if(mItems.size==0){
+                    list.visibility = View.GONE
+                    nothing.visibility = View.VISIBLE
+                }
+                else {
+                    list.visibility = View.VISIBLE
+                    nothing.visibility = View.GONE
+                }
                 progressDialog?.dismiss()
                 adapter!!.notifyDataSetChanged()
             }

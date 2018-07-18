@@ -6,18 +6,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.ImageView
 import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.adapter.ShareAdapter
 import com.narsha2018.usicmusic.adapter.ShareItem
-import com.narsha2018.usicmusic.service.MusicService
 import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_community.*
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.json.JSONObject
 
 class CommunityActivity : AppCompatActivity() {
@@ -34,7 +30,7 @@ class CommunityActivity : AppCompatActivity() {
         progressDialog = ProgressDialog(this)
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
-        loadMusic()
+        swipe_layout.setOnRefreshListener {  loadMusic() }
         back.setOnClickListener { onBackPressed() }
         write.setOnClickListener { startActivityForResult<WriteActivity>(1) }
     }
@@ -49,6 +45,7 @@ class CommunityActivity : AppCompatActivity() {
     }
 
     private fun loadMusic() {
+        mItems.clear()
         progressDialog?.show()
         doAsync {
             fuelUtils.getShare()
@@ -66,6 +63,7 @@ class CommunityActivity : AppCompatActivity() {
             uiThread {
                 adapter!!.notifyDataSetChanged()
                 progressDialog?.dismiss()
+                swipe_layout.isRefreshing = false
             }
         }
     }
@@ -86,9 +84,14 @@ class CommunityActivity : AppCompatActivity() {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_CANCELED) {
                 //val result = data.getStringExtra("activity")
-                mItems.clear()
                 loadMusic()
             }
         }
+    }
+
+    override fun onResume() {
+        mItems.clear()
+        loadMusic()
+        super.onResume()
     }
 }

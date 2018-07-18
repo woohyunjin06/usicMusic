@@ -76,6 +76,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
         loadMusic()
+        swipe_layout.setOnRefreshListener { loadMusic() }
     }
 
     private fun initRecyclerView() { // RecyclerView 기본세팅
@@ -88,6 +89,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     }
 
     private fun loadMusic() {
+        mItems.clear()
         progressDialog?.show()
         doAsync {
             fuelUtils.getMusicData(false)
@@ -137,6 +139,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
             uiThread {
                 adapter!!.notifyDataSetChanged()
                 progressDialog?.dismiss()
+                swipe_layout.isRefreshing = false
             }
         }
     }

@@ -193,4 +193,18 @@ class FuelUtils (private val c: Context){
             }
         }
     }
+    fun deleteBoard(bid: String){
+        val gson = Gson()
+        val resultJson = MusicResponse(true, "error", "", "", JSONArray(), "","","")
+        "/board/$bid".httpDelete().responseJson { _, _, result ->
+            when (result) {
+                is Result.Failure -> {
+                    (c as DetailActivity).notifyDeleteFinish(gson.toJson(resultJson))
+                }
+                is Result.Success -> {
+                    (c as DetailActivity).notifyDeleteFinish(result.get().content)
+                }
+            }
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package com.narsha2018.usicmusic.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.preference.Preference
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +15,11 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.ctx
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.yesButton
 import org.json.JSONObject
 
 class DetailActivity : AppCompatActivity(){
@@ -32,6 +39,19 @@ class DetailActivity : AppCompatActivity(){
         list.adapter = adapter
         post.setOnClickListener { fuelUtils.postData("/board/$id/comment", CommentRequest(uid, commentInput.text.toString()), false);
         commentInput.setText("")}
+        header.onClick {
+            if (writer.text == uid)
+                alert("정말로 삭제하시겠습니까?") {
+                    also {
+                        ctx.setTheme(R.style.CustomAlertDialog)
+                    }
+                    yesButton {
+                        fuelUtils.deleteBoard(id!!)
+                    }
+                    noButton { }
+                }.show()
+        }
+        swipe_layout.setOnRefreshListener {fuelUtils.getBoardContent(id!!)}
         list.layoutManager = LinearLayoutManager(this)
     }
     fun notifyFinish(result : String){
@@ -49,6 +69,7 @@ class DetailActivity : AppCompatActivity(){
             mItems.add(CommentItem(id!! ,comment.getString("_id"),comment.getString("comment"),comment.getString("name")))
         }
         adapter!!.notifyDataSetChanged()
+
     }
     fun notifyCommentFinish(result: String){
         fuelUtils.getBoardContent(id!!)
@@ -57,5 +78,16 @@ class DetailActivity : AppCompatActivity(){
             Toasty.success(this, "댓글 작성을 실패했습니다.")
         else
             fuelUtils.getBoardContent(id!!)
+        swipe_layout.isRefreshing = false
+    }
+    fun notifyDeleteFinish(result : String){
+        val objects = JSONObject(result)
+        if(objects.getString("status")!="204")
+            Toasty.success(this, "게시글 삭제를 실패했습니다.")
+        else {
+            val returnIntent = Intent()
+            setResult(Activity.RESULT_CANCELED, returnIntent)
+            finish()
+        }
     }
 }

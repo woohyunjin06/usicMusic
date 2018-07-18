@@ -105,6 +105,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
     }
 
     fun notifyFinish(musicInfo: String, keyword: String) {
+        mItems.clear()
         doAsync {
             val arr = JSONObject(musicInfo).getJSONArray("music")
             for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해

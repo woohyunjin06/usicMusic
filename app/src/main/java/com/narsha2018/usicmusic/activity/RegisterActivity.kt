@@ -72,6 +72,9 @@ class RegisterActivity : AppCompatActivity() {
                     it.nick.setText("")
                 }
             }
+            uiThread {
+                progressDialog?.dismiss()
+            }
         }
     }
 }
