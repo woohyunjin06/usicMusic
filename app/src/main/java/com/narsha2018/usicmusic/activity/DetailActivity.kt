@@ -3,7 +3,6 @@ package com.narsha2018.usicmusic.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.preference.Preference
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.narsha2018.usicmusic.R
@@ -16,7 +15,6 @@ import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.ctx
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.yesButton
@@ -37,7 +35,12 @@ class DetailActivity : AppCompatActivity(){
         list.setHasFixedSize(false)
         adapter = CommentAdapter(mItems, this)
         list.adapter = adapter
-        post.setOnClickListener { fuelUtils.postData("/board/$id/comment", CommentRequest(uid, commentInput.text.toString()), false);
+        post.setOnClickListener {
+            if (commentInput.text.toString().isEmpty()) {
+
+                Toasty.warning(this, "댓글을 입력해주세요").show()
+            } else
+                fuelUtils.postData("/board/$id/comment", CommentRequest(uid, commentInput.text.toString()), false);
         commentInput.setText("")}
         header.onClick {
             if (writer.text == uid)
