@@ -1,34 +1,19 @@
 package com.narsha2018.usicmusic.adapter
 
-import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.net.Uri
-import android.preference.Preference
-import android.support.v4.widget.ImageViewCompat
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.narsha2018.usicmusic.R
-import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.item_chart.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
-import java.util.ArrayList
+import java.util.*
 
 /**
 * Created by hyunjin on 2018. 5. 11..
@@ -58,7 +43,8 @@ class CommentAdapter(private var mItems: ArrayList<CommentItem>, context : Conte
                     also {
                         ctx.setTheme(R.style.CustomAlertDialog)
                     }
-                    yesButton { fuelUtils.deleteComment(mItems[position].cid, mItems[position].bid)
+                    yesButton {
+                        fuelUtils.delete("/board/${mItems[position].bid}/comment/${mItems[position].cid}", FuelUtils.DeleteEnum.Comment)
                     mItems.removeAt(position)
                     notifyDataSetChanged()} // 삭제
                     noButton {  }

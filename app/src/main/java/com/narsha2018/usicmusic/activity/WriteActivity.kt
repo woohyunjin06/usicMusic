@@ -19,13 +19,13 @@ class WriteActivity : AppCompatActivity(){
         setContentView(R.layout.activity_write)
 
         post.setOnClickListener {
-            if (titles.text.toString().isEmpty())
-                Toasty.warning(this, "타이틀을 입력해주세요").show()
-            else if (content.text.toString().isEmpty())
-                Toasty.warning(this, "내용을 입력해주세요").show()
-            else
-                fuelUtils.postData("/board", WriteRequest(titles.text.toString(), content.text.toString(),
-                PreferencesUtils(this).getData("id")), false) }
+            when {
+                titles.text.toString().isEmpty() -> Toasty.warning(this, "타이틀을 입력해주세요").show()
+                content.text.toString().isEmpty() -> Toasty.warning(this, "내용을 입력해주세요").show()
+                else -> fuelUtils.postData("/board", WriteRequest(titles.text.toString(), content.text.toString(),
+                        PreferencesUtils(this).getData("id")), FuelUtils.PostEnum.Write)
+            }
+        }
     }
     fun notifyFinish(result : String){
         val objects = JSONObject(result)

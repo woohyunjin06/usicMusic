@@ -13,7 +13,9 @@ import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_community.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 
 class CommunityActivity : AppCompatActivity() {
@@ -33,8 +35,7 @@ class CommunityActivity : AppCompatActivity() {
         swipe_layout.setOnRefreshListener {  loadMusic() }
         back.setOnClickListener { onBackPressed() }
         write.setOnClickListener { startActivityForResult<WriteActivity>(1) }
-    }
-
+    };
     private fun initRecyclerView() { // RecyclerView 기본세팅
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)
@@ -48,7 +49,7 @@ class CommunityActivity : AppCompatActivity() {
         mItems.clear()
         progressDialog?.show()
         doAsync {
-            fuelUtils.getShare()
+            fuelUtils.getCommunityData(FuelUtils.BoardEnum.Board, null)
         }
     }
 
@@ -68,22 +69,9 @@ class CommunityActivity : AppCompatActivity() {
         }
     }
 
-
-    /*override fun onBackPressed() {
-        val returnIntent = Intent()
-        returnIntent.putExtra("isPlaying", isPlaying)
-        returnIntent.putExtra("songUrl", uris)
-        returnIntent.putExtra("songTitle", titles)
-        setResult(Activity.RESULT_OK, returnIntent)
-        finish()
-    }*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-
-        //val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
-        //val pause: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_pause)
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_CANCELED) {
-                //val result = data.getStringExtra("activity")
                 loadMusic()
             }
         }

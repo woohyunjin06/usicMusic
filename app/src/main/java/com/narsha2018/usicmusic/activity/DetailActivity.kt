@@ -1,6 +1,7 @@
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -14,10 +15,8 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_detail.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
+import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.yesButton
 import org.json.JSONObject
 
 class DetailActivity : AppCompatActivity(){
@@ -26,12 +25,22 @@ class DetailActivity : AppCompatActivity(){
     var idx : Int = 0
     private val mItems = ArrayList<CommentItem>()
     private var adapter: CommentAdapter? = null
+
+    var progressDialog: ProgressDialog? = null
+    private fun loadDetail() {
+        progressDialog?.show()
+        doAsync {
+            fuelUtils.getCommunityData(FuelUtils.BoardEnum.Content, id!!)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         id = intent.getStringExtra("id")
         val uid = PreferencesUtils(this).getData("id")
-        fuelUtils.getBoardContent(id!!)
+
+
         list.setHasFixedSize(false)
         adapter = CommentAdapter(mItems, this)
         list.adapter = adapter
@@ -40,7 +49,7 @@ class DetailActivity : AppCompatActivity(){
 
                 Toasty.warning(this, "댓글을 입력해주세요").show()
             } else
-                fuelUtils.postData("/board/$id/comment", CommentRequest(uid, commentInput.text.toString()), false);
+                fuelUtils.postData("/board/$id/comment", CommentRequest(uid, commentInput.text.toString()), FuelUtils.PostEnum.Comment)
         commentInput.setText("")}
         header.onClick {
             if (writer.text == uid)
@@ -49,38 +58,46 @@ class DetailActivity : AppCompatActivity(){
                         ctx.setTheme(R.style.CustomAlertDialog)
                     }
                     yesButton {
-                        fuelUtils.deleteBoard(id!!)
+                        fuelUtils.delete("/board/$id", FuelUtils.DeleteEnum.Board)
                     }
                     noButton { }
                 }.show()
         }
-        swipe_layout.setOnRefreshListener {fuelUtils.getBoardContent(id!!)}
+        swipe_layout.setOnRefreshListener { fuelUtils.getCommunityData(FuelUtils.BoardEnum.Content, id!!) }
         list.layoutManager = LinearLayoutManager(this)
     }
     fun notifyFinish(result : String){
-        mItems.clear()
-        val obj = JSONObject(result)
-        val message = obj.getJSONObject("message")
-        titles.text = message.getString("title")
-        writer.text = message.getString("writer")
-        date.text = DateUtils.fromISO(message.getString("date"))
-        content.text = message.getString("content")
-        val comments = obj.getJSONObject("message").getJSONArray("comments")
+        doAsync {
+            mItems.clear()
+            val obj = JSONObject(result)
+            val message = obj.getJSONObject("message")
 
-        for(idx in 0 until comments.length()){
-            var comment = comments.getJSONObject(idx)
-            mItems.add(CommentItem(id!! ,comment.getString("_id"),comment.getString("comment"),comment.getString("name")))
+            uiThread {
+                titles.text = message.getString("title")
+                writer.text = message.getString("writer")
+                date.text = DateUtils.fromISO(message.getString("date"))
+                content.text = message.getString("content")
+            }
+            val comments = obj.getJSONObject("message").getJSONArray("comments")
+
+            for (idx in 0 until comments.length()) {
+                var comment = comments.getJSONObject(idx)
+                mItems.add(CommentItem(id!!, comment.getString("_id"), comment.getString("comment"), comment.getString("name")))
+            }
+            uiThread {
+                adapter!!.notifyDataSetChanged()
+                progressDialog?.dismiss()
+            }
         }
-        adapter!!.notifyDataSetChanged()
 
     }
     fun notifyCommentFinish(result: String){
-        fuelUtils.getBoardContent(id!!)
+        fuelUtils.getCommunityData(FuelUtils.BoardEnum.Content, id!!)
         val objects = JSONObject(result)
         if(objects.getString("status")!="200")
             Toasty.success(this, "댓글 작성을 실패했습니다.")
         else
-            fuelUtils.getBoardContent(id!!)
+            fuelUtils.getCommunityData(FuelUtils.BoardEnum.Content, id!!)
         swipe_layout.isRefreshing = false
     }
     fun notifyDeleteFinish(result : String){

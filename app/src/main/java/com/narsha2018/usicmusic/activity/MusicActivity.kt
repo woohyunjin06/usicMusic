@@ -1,23 +1,18 @@
 package com.narsha2018.usicmusic.activity
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import com.narsha2018.usicmusic.R
-import com.narsha2018.usicmusic.adapter.MusicAdapter
-import com.narsha2018.usicmusic.adapter.MusicItem
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.graphics.drawable.Drawable
-import android.os.IBinder
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.widget.ImageView
+import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
+import com.narsha2018.usicmusic.adapter.MusicAdapter
+import com.narsha2018.usicmusic.adapter.MusicItem
 import com.narsha2018.usicmusic.service.MusicService
 import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
@@ -92,7 +87,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         mItems.clear()
         progressDialog?.show()
         doAsync {
-            fuelUtils.getMusicData(false)
+            fuelUtils.getMusicData(FuelUtils.MusicEnum.Music)
         }
     }
 
@@ -117,8 +112,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://10.80.162.221:3000/" + item.getString("music"),
-                                    "http://10.80.162.221:3000/" + item.getString("cover"),
+                                    "http://192.168.43.94:3000/" + item.getString("music"),
+                                    "http://192.168.43.94:3000/" + item.getString("cover"),
                                     isLike,
                                     item.getString("artist")
                             ))
@@ -128,8 +123,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://10.80.162.221:3000/" + item.getString("music"),
-                                    "http://10.80.162.221:3000/" + item.getString("cover"),
+                                    "http://192.168.43.94:3000/" + item.getString("music"),
+                                    "http://192.168.43.94:3000/" + item.getString("cover"),
                                     isLike,
                                     "No Artist"
                             ))

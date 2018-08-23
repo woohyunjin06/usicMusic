@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.net.Uri
 import android.support.v4.widget.ImageViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -20,8 +19,7 @@ import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.util.FuelUtils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_chart.view.*
-import org.jetbrains.anko.toast
-import java.util.ArrayList
+import java.util.*
 
 /**
 * Created by hyunjin on 2018. 5. 11..
@@ -66,11 +64,13 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
 
             if(isLike){ // 좋아요 취소
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#e9e9e9")))
-                FuelUtils(contexts).deleteFavorite(mItems[position].idx,isSearch)
+                FuelUtils(contexts).delete(mItems[position].idx, FuelUtils.DeleteEnum.SearchFavorite.takeIf { isSearch }
+                        ?: FuelUtils.DeleteEnum.MusicFavorite)
             }
             else{ // 좋아요
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#ff0000")))
-                FuelUtils(contexts).postFavorite(mItems[position].idx, isSearch)
+                FuelUtils(contexts).postData(mItems[position].idx, isSearch, FuelUtils.PostEnum.SearchFavorite.takeIf { isSearch }
+                        ?: FuelUtils.PostEnum.MusicFavorite)
             }
             isLike = !isLike
         }

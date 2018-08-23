@@ -1,17 +1,15 @@
 package com.narsha2018.usicmusic.activity
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.Preference
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.google.gson.Gson
 import com.narsha2018.usicmusic.R
@@ -55,7 +53,7 @@ class EntranceActivity : AppCompatActivity() {
             return
         }
         doAsync {
-            fuelUtil.postData("/auth/login", LoginRequest(id, pw), true)
+            fuelUtil.postData("/auth/login", LoginRequest(id, pw), FuelUtils.PostEnum.AutoLogin)
         }
     }
 

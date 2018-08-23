@@ -1,15 +1,13 @@
 package com.narsha2018.usicmusic.activity
 
 import android.app.ProgressDialog
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import com.narsha2018.usicmusic.R
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import com.google.gson.Gson
-import com.narsha2018.usicmusic.model.LoginRequest
-import com.narsha2018.usicmusic.model.LoginResponse
+import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.model.RegisterRequest
 import com.narsha2018.usicmusic.model.RegisterResponse
 import com.narsha2018.usicmusic.util.BitmapUtils
@@ -52,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         progressDialog?.show()
         doAsync {
-            fuelUtil.postData("/auth/register", RegisterRequest(strId, strPw, strNick), false)
+            fuelUtil.postData("/auth/register", RegisterRequest(strId, strPw, strNick), FuelUtils.PostEnum.Register)
         }
     }
 

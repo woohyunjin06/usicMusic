@@ -85,7 +85,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
     private fun loadMusic() {
         progressDialog?.show()
         doAsync {
-            fuelUtils.getMusicData(true)
+            fuelUtils.getMusicData(FuelUtils.MusicEnum.Favorite)
         }
     }
 
@@ -107,8 +107,8 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                                 uiThread {
                                     mItems.add(FavoriteItem(item.getString("title"),
                                             DateUtils.fromISO(item.getString("date"))!!,
-                                            "http://10.80.162.221:3000/" + item.getString("music"),
-                                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                                            "http://192.168.43.94:3000/" + item.getString("music"),
+                                            "http://192.168.43.94:3000/" + item.getString("cover"),
                                             item.getString("artist")
                                     ))
                                 }
@@ -116,8 +116,8 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                                 uiThread {
                                     mItems.add(FavoriteItem(item.getString("title"),
                                             DateUtils.fromISO(item.getString("date"))!!,
-                                            "http://10.80.162.221:3000/" + item.getString("music"),
-                                            "http://10.80.162.221:3000/" + item.getString("cover"),
+                                            "http://192.168.43.94:3000/" + item.getString("music"),
+                                            "http://192.168.43.94:3000/" + item.getString("cover"),
                                             "No Artist"
                                     ))
                                 }

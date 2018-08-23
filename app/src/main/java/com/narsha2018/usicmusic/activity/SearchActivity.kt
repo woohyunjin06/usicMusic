@@ -1,29 +1,25 @@
 package com.narsha2018.usicmusic.activity
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import com.narsha2018.usicmusic.R
-import com.narsha2018.usicmusic.adapter.MusicAdapter
-import com.narsha2018.usicmusic.adapter.MusicItem
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
-import com.google.gson.Gson
+import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
+import com.narsha2018.usicmusic.adapter.MusicAdapter
+import com.narsha2018.usicmusic.adapter.MusicItem
 import com.narsha2018.usicmusic.service.MusicService
 import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_entrance.*
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
@@ -94,23 +90,26 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
         list.layoutManager = LinearLayoutManager(this)
     }
 
+    private var keyword: String? = null
+
     private fun loadMusic() {
         val keyword : String = edt_search.text.toString()
         if(keyword.trim()!=""){
             progressDialog?.show()
-            fuelUtils.getSearchData(keyword)
+            this.keyword = keyword
+            fuelUtils.getMusicData(FuelUtils.MusicEnum.Search)
         }
         else
             Toasty.error(this, "검색어를 입력해주세요").show()
     }
 
-    fun notifyFinish(musicInfo: String, keyword: String) {
+    fun notifyFinish(musicInfo: String) {
         mItems.clear()
         doAsync {
             val arr = JSONObject(musicInfo).getJSONArray("music")
             for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
                 val item: JSONObject = arr.getJSONObject(idx)
-                if (item.getBoolean("isMusic") && item.getString("title").contains(keyword)) { // 소스가 아니고 음악이면
+                if (item.getBoolean("isMusic") && item.getString("title").contains(keyword!!)) { // 소스가 아니고 음악이면
                     val rateArr = item.getJSONArray("rate")
                     var isLike = false
                     for (idx2: Int in 0 until rateArr.length()) { // 좋아요 한 사람중 자신의 이름을 찾으면 is Like = true
@@ -127,8 +126,8 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://10.80.162.221:3000/" + item.getString("music"),
-                                    "http://10.80.162.221:3000/" + item.getString("cover"),
+                                    "http://192.168.43.94:3000/" + item.getString("music"),
+                                    "http://192.168.43.94:3000/" + item.getString("cover"),
                                     isLike,
                                     item.getString("artist")
                             ))
@@ -138,8 +137,8 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://10.80.162.221:3000/" + item.getString("music"),
-                                    "http://10.80.162.221:3000/" + item.getString("cover"),
+                                    "http://192.168.43.94:3000/" + item.getString("music"),
+                                    "http://192.168.43.94:3000/" + item.getString("cover"),
                                     isLike,
                                     "No Artist"
                             ))

@@ -1,26 +1,20 @@
 package com.narsha2018.usicmusic.activity
 
 import android.app.*
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.narsha2018.usicmusic.R
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.narsha2018.usicmusic.`interface`.OnPlayListener
-import com.narsha2018.usicmusic.adapter.MusicItem
+import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.service.MusicService
-import com.narsha2018.usicmusic.util.DateUtils
 import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import com.narsha2018.usicmusic.view.MediaPlayer
@@ -35,15 +29,9 @@ import org.json.JSONObject
 @Suppress("DEPRECATION") // for progressDialog
 class MainActivity : AppCompatActivity(){ //rank activity
 
-    val fuelUtils = FuelUtils(this)
-    val mediaPlayer: MediaPlayer = MediaPlayer()
-    var progressDialog: ProgressDialog? = null
-
-    var songUrl: String? = null
-
-    var myService: MusicService? = null
-    var isBound = false
-
+    private val fuelUtils = FuelUtils(this)
+    private val mediaPlayer: MediaPlayer = MediaPlayer()
+    private var progressDialog: ProgressDialog? = null
 
     fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         mediaPlayer.playMusic(uri) //return boolean
@@ -88,7 +76,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
     private fun loadRank() {
         progressDialog?.show()
         doAsync {
-            fuelUtils.getRankData()
+            fuelUtils.getMusicData(FuelUtils.MusicEnum.Rank)
         }
     }
 
@@ -137,7 +125,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             else
                 artist1.text = "No Artist"
             Glide.with(this)
-                    .load("http://10.80.162.221:3000/" + objectA.getString("cover"))
+                    .load("http://192.168.43.94:3000/" + objectA.getString("cover"))
                     .apply(RequestOptions()
                             .placeholder(R.drawable.ic_launcher) //로딩
                             .error(R.drawable.ic_launcher) //실패
@@ -150,7 +138,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             else
                 artist2.text = "No Artist"
             Glide.with(this)
-                    .load("http://10.80.162.221:3000/" + objectB.getString("cover"))
+                    .load("http://192.168.43.94:3000/" + objectB.getString("cover"))
                     .apply(RequestOptions()
                             .placeholder(R.drawable.ic_launcher) //로딩
                             .error(R.drawable.ic_launcher) //실패
@@ -163,7 +151,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             else
                 artist3.text = "No Artist"
             Glide.with(this)
-                    .load("http://10.80.162.221:3000/" + objectC.getString("cover"))
+                    .load("http://192.168.43.94:3000/" + objectC.getString("cover"))
                     .apply(RequestOptions()
                             .placeholder(R.drawable.ic_launcher) //로딩
                             .error(R.drawable.ic_launcher) //실패
