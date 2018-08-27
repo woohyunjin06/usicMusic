@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             else
                 artist1.text = "No Artist"
             Glide.with(this)
-                    .load("http://192.168.43.94:3000/" + objectA.getString("cover"))
+                    .load(getString(R.string.server_url) + objectA.getString("cover"))
                     .apply(RequestOptions()
                             .placeholder(R.drawable.ic_launcher) //로딩
                             .error(R.drawable.ic_launcher) //실패
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             else
                 artist2.text = "No Artist"
             Glide.with(this)
-                    .load("http://192.168.43.94:3000/" + objectB.getString("cover"))
+                    .load(getString(R.string.server_url) + objectB.getString("cover"))
                     .apply(RequestOptions()
                             .placeholder(R.drawable.ic_launcher) //로딩
                             .error(R.drawable.ic_launcher) //실패
@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
             else
                 artist3.text = "No Artist"
             Glide.with(this)
-                    .load("http://192.168.43.94:3000/" + objectC.getString("cover"))
+                    .load(getString(R.string.server_url) + objectC.getString("cover"))
                     .apply(RequestOptions()
                             .placeholder(R.drawable.ic_launcher) //로딩
                             .error(R.drawable.ic_launcher) //실패

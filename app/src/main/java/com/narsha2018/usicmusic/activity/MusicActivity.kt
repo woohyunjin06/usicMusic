@@ -33,6 +33,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     var titles : String? = null
     var uris : String? = null
 
+    var SERVER_URL: String? = null
+
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
@@ -67,6 +69,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         setContentView(R.layout.activity_music)
         initRecyclerView()
         Toasty.Config.reset()
+        SERVER_URL = getString(R.string.server_url)
         progressDialog = ProgressDialog(this)
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
@@ -112,8 +115,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://192.168.43.94:3000/" + item.getString("music"),
-                                    "http://192.168.43.94:3000/" + item.getString("cover"),
+                                    "$SERVER_URL" + item.getString("music"),
+                                    "$SERVER_URL" + item.getString("cover"),
                                     isLike,
                                     item.getString("artist")
                             ))
@@ -123,8 +126,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "http://192.168.43.94:3000/" + item.getString("music"),
-                                    "http://192.168.43.94:3000/" + item.getString("cover"),
+                                    "$SERVER_URL" + item.getString("music"),
+                                    "$SERVER_URL" + item.getString("cover"),
                                     isLike,
                                     "No Artist"
                             ))
@@ -141,7 +144,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
 
     fun notifyFavoriteFinish(status : Boolean){
         if(!status)
-            Toasty.success(this, "Failed to rate")
+            Toasty.error(this, "Failed to rate").show()
     }
 
     override fun onBackPressed() {

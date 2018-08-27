@@ -8,7 +8,6 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
-import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.activity.*
 import com.narsha2018.usicmusic.model.LoginResponse
 import com.narsha2018.usicmusic.model.MusicResponse
@@ -18,7 +17,7 @@ import org.json.JSONArray
 class FuelUtils (private val c: Context){
     init {
         Toasty.Config.reset()
-        FuelManager.instance.basePath = c.getString(R.string.server_url) + "/api"
+        FuelManager.instance.basePath = "https://usicmusic.herokuapp.com/api"
     }
 
     private val gson = Gson()

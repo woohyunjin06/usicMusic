@@ -16,7 +16,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
+import com.narsha2018.usicmusic.model.FavoriteRequest
 import com.narsha2018.usicmusic.util.FuelUtils
+import com.narsha2018.usicmusic.util.PreferencesUtils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_chart.view.*
 import java.util.*
@@ -69,7 +71,7 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
             }
             else{ // 좋아요
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#ff0000")))
-                FuelUtils(contexts).postData(mItems[position].idx, isSearch, FuelUtils.PostEnum.SearchFavorite.takeIf { isSearch }
+                FuelUtils(contexts).postData("/music/${mItems[position].idx}/rate", FavoriteRequest(PreferencesUtils(contexts).getData("id")), FuelUtils.PostEnum.SearchFavorite.takeIf { isSearch }
                         ?: FuelUtils.PostEnum.MusicFavorite)
             }
             isLike = !isLike
