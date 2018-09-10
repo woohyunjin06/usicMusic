@@ -26,9 +26,9 @@ import java.util.*
 /**
 * Created by hyunjin on 2018. 5. 11..
 */
-class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, var listener: OnPlayListener, var isSearch: Boolean) : RecyclerView.Adapter<MusicAdapter.ItemViewHolder>() {
+class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, private var listener: OnPlayListener, private var isSearch: Boolean) : RecyclerView.Adapter<MusicAdapter.ItemViewHolder>() {
 
-    val contexts : Context = context
+    private val contexts : Context = context
     var id: String? = null
     // 새로운 뷰 홀더 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -41,7 +41,7 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
 
     // View 의 내용을 해당 포지션의 데이터로 바꿉니다.
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        var isLike = false
+        var isLike : Boolean
         holder.musicTitle.text = mItems[position].musicTitle
         holder.date.text = mItems[position].date
         holder.artist.text = mItems[position].artist
@@ -60,13 +60,11 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
             isLike = false
             ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#e9e9e9"))) // set tint
         }
-
-
         holder.like.setOnClickListener {
 
             if(isLike){ // 좋아요 취소
                 ImageViewCompat.setImageTintList(holder.like, ColorStateList.valueOf(Color.parseColor("#e9e9e9")))
-                FuelUtils(contexts).delete(mItems[position].idx, FuelUtils.DeleteEnum.SearchFavorite.takeIf { isSearch }
+                FuelUtils(contexts).delete("/music/${mItems[position].idx}/rate/${PreferencesUtils(contexts).getData("id")}", FuelUtils.DeleteEnum.SearchFavorite.takeIf { isSearch }
                         ?: FuelUtils.DeleteEnum.MusicFavorite)
             }
             else{ // 좋아요

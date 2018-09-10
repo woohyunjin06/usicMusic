@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.ProgressDialog
@@ -15,15 +17,14 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
 
 class RegisterActivity : AppCompatActivity() {
 
-    val gson = Gson()
-    var progressDialog : ProgressDialog? = null
+    private val gson = Gson()
+    private var progressDialog : ProgressDialog? = null
     private val fuelUtil = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +38,8 @@ class RegisterActivity : AppCompatActivity() {
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
 
-        back.onClick { finish() }
-        start.onClick{ doRegister() }
+        back.setOnClickListener { finish() }
+        start.setOnClickListener{ doRegister() }
     }
     private fun doRegister() {
         val strId : String = id.text.toString()

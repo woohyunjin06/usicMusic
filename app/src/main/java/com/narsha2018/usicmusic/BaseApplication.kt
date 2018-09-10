@@ -23,10 +23,10 @@ class BaseApplication : Application() {
         private fun replaceFont(staticTypefaceFieldName: String,
                                 newTypeface: Typeface) {
             try {
-                val StaticField = Typeface::class.java
+                val staticField = Typeface::class.java
                         .getDeclaredField(staticTypefaceFieldName)
-                StaticField.isAccessible = true
-                StaticField.set(null, newTypeface)
+                staticField.isAccessible = true
+                staticField.set(null, newTypeface)
             } catch (e: NoSuchFieldException) {
                 e.printStackTrace()
             } catch (e: IllegalAccessException) {

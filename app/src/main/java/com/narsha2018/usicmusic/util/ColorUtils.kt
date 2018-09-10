@@ -2,7 +2,6 @@ package com.narsha2018.usicmusic.util
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 import com.narsha2018.usicmusic.R
 
 class ColorUtils {

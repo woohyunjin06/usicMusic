@@ -9,16 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.narsha2018.usicmusic.R
-import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import com.narsha2018.usicmusic.activity.DetailActivity
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_share.view.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import java.util.ArrayList
 
 /**
-* Created by hyunjin on 2018. 5. 11..
+* Created by HyunJin on 2018. 5. 11..
 */
 class ShareAdapter(private var mItems: ArrayList<ShareItem>, val context : Context) : RecyclerView.Adapter<ShareAdapter.ItemViewHolder>() {
 

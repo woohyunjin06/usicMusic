@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_write.*
 import org.json.JSONObject
 
 class WriteActivity : AppCompatActivity(){
-    val fuelUtils = FuelUtils(this)
+    private val fuelUtils = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)

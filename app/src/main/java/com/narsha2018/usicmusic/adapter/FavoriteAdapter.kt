@@ -15,15 +15,14 @@ import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_favorite.view.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.ArrayList
 
 /**
 * Created by hyunjin on 2018. 5. 11..
 */
-class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Context, var listener: OnPlayListener) : RecyclerView.Adapter<FavoriteAdapter.ItemViewHolder>() {
+class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Context, private var listener: OnPlayListener) : RecyclerView.Adapter<FavoriteAdapter.ItemViewHolder>() {
 
-    val contexts : Context = context
+    private val contexts : Context = context
     var id: String? = null
     // 새로운 뷰 홀더 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -47,7 +46,7 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
                         .error(R.drawable.ic_launcher) //실패
                         .fallback(R.drawable.ic_launcher)) //없음
                 .into(holder.thumbnail)
-        holder.btn.onClick { listener.onClickPlay(null, mItems[position].musicTitle, mItems[position].musicUri, holder.btn) }
+        holder.btn.setOnClickListener { listener.onClickPlay(null, mItems[position].musicTitle, mItems[position].musicUri, holder.btn) }
     }
 
     // 데이터 셋의 크기를 리턴

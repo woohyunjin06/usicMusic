@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
@@ -23,24 +25,23 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 
 
 class SearchActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
-    var progressDialog : ProgressDialog? = null
+    private var progressDialog : ProgressDialog? = null
 
-    var btn_prev : ImageView? = null
+    private var btnPrev : ImageView? = null
 
     var titles : String? = null
-    var uris : String? = null
+    private var uris : String? = null
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
-            if(btn_prev!=null)
-                btn_prev!!.imageResource= R.drawable.ic_play
+            if(btnPrev!=null)
+                btnPrev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
             isPlaying = true
             titles = title
@@ -71,8 +72,8 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
         progressDialog = ProgressDialog(this)
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
-        btn_search.onClick { loadMusic() }
-        edt_search.setOnKeyListener(View.OnKeyListener { p0, p1, p2 ->
+        btn_search.setOnClickListener { loadMusic() }
+        edt_search.setOnKeyListener(View.OnKeyListener { _, p1, p2 ->
             if ((p2!!.action == KeyEvent.ACTION_DOWN) && (p1 == KeyEvent.KEYCODE_ENTER)) {
                 loadMusic()
                 return@OnKeyListener true

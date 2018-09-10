@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.ProgressDialog
@@ -18,15 +20,14 @@ import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
 
 class LoginActivity : AppCompatActivity() {
 
-    val gson = Gson()
-    var progressDialog : ProgressDialog? = null
+    private val gson = Gson()
+    private var progressDialog : ProgressDialog? = null
     private val fuelUtil = FuelUtils(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +40,15 @@ class LoginActivity : AppCompatActivity() {
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
         Toasty.Config.reset()
-        go.onClick{ doLogin() }
-        start.onClick { startActivity<RegisterActivity>() }
-        back.onClick{ onBackPressed() }
-        pw.setOnKeyListener(object : View.OnKeyListener {
-            override fun onKey(p0: View?, p1: Int, p2: KeyEvent?): Boolean {
-                if ((p2!!.getAction() == KeyEvent.ACTION_DOWN) && (p1 == KeyEvent.KEYCODE_ENTER)) {
-                    doLogin()
-                    return true
-                }
-                return false
+        go.setOnClickListener{ doLogin() }
+        start.setOnClickListener { startActivity<RegisterActivity>() }
+        back.setOnClickListener{ onBackPressed() }
+        pw.setOnKeyListener(View.OnKeyListener { _, p1, p2 ->
+            if ((p2!!.action == KeyEvent.ACTION_DOWN) && (p1 == KeyEvent.KEYCODE_ENTER)) {
+                doLogin()
+                return@OnKeyListener true
             }
+            false
         })
     }
     private fun doLogin() {

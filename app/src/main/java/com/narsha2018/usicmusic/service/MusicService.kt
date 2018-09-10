@@ -5,14 +5,11 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Binder
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.activity.MainActivity
 import com.narsha2018.usicmusic.view.MediaPlayer
-
-
 
 class MusicService : Service() {
     override fun onBind(p0: Intent?): IBinder {
@@ -20,10 +17,10 @@ class MusicService : Service() {
     }
 
     companion object {
-        val SONG_URL = "songUrl"
-        val SONG_NAME = "songTitle"
+        const val SONG_URL = "songUrl"
+        const val SONG_NAME = "songTitle"
     }
-    var url : String? = null
+    private var url : String? = null
     var title : String? = null
 
 

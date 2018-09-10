@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
@@ -25,21 +27,20 @@ import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 
 class MusicActivity : AppCompatActivity(), OnPlayListener {
-    var progressDialog : ProgressDialog? = null
+    private var progressDialog : ProgressDialog? = null
 
-
-    var btn_prev : ImageView? = null
+    private var btnPrev : ImageView? = null
     private var isPlaying = false
     var titles : String? = null
-    var uris : String? = null
+    private var uris : String? = null
 
-    var SERVER_URL: String? = null
+    private var URL: String? = null
 
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) { // 켜기
-            if(btn_prev!=null)
-                btn_prev!!.imageResource= R.drawable.ic_play
+            if(btnPrev!=null)
+                btnPrev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
             isPlaying = true
             titles = title
@@ -49,7 +50,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
             startService(i)
-            btn_prev = btn
+            btnPrev = btn
         } else { //끄기
             btn.imageResource = R.drawable.ic_play
             isPlaying = false
@@ -69,7 +70,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         setContentView(R.layout.activity_music)
         initRecyclerView()
         Toasty.Config.reset()
-        SERVER_URL = getString(R.string.server_url)
+        URL = getString(R.string.server_url)
         progressDialog = ProgressDialog(this)
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
@@ -115,8 +116,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "$SERVER_URL" + item.getString("music"),
-                                    "$SERVER_URL" + item.getString("cover"),
+                                    "$URL" + item.getString("music"),
+                                    "$URL" + item.getString("cover"),
                                     isLike,
                                     item.getString("artist")
                             ))
@@ -126,8 +127,8 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
                             mItems.add(MusicItem(item.getString("_id"),
                                     item.getString("title"),
                                     DateUtils.fromISO(item.getString("date"))!!,
-                                    "$SERVER_URL" + item.getString("music"),
-                                    "$SERVER_URL" + item.getString("cover"),
+                                    "$URL" + item.getString("music"),
+                                    "$URL" + item.getString("cover"),
                                     isLike,
                                     "No Artist"
                             ))

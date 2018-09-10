@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
@@ -32,13 +34,13 @@ import java.util.*
 class FavoriteActivity : AppCompatActivity(), OnPlayListener {
     private var isPlaying = false
     var titles : String? = null
-    var uris : String? = null
-    var btn_prev : ImageView? = null
+    private var uris : String? = null
+    private var btnPrev : ImageView? = null
     override fun onClickPlay(idx: String?, title: String, uri: String, btn: ImageView) {
         val play: Drawable? = ContextCompat.getDrawable(this, R.drawable.ic_play)
         if (btn.drawable.constantState == play?.constantState) {
-            if(btn_prev!=null)
-                btn_prev!!.imageResource= R.drawable.ic_play
+            if(btnPrev!=null)
+                btnPrev!!.imageResource= R.drawable.ic_play
             btn.imageResource = R.drawable.ic_pause
             isPlaying = true
             titles = title
@@ -47,7 +49,7 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
             startService(i)
-            btn_prev = btn
+            btnPrev = btn
         } else {
             btn.imageResource = R.drawable.ic_play
 
@@ -58,8 +60,8 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
             isPlaying = false
         }
     }
-    val fuelUtils = FuelUtils(this)
-    var progressDialog: ProgressDialog? = null
+    private val fuelUtils = FuelUtils(this)
+    private var progressDialog: ProgressDialog? = null
     private val mItems = ArrayList<FavoriteItem>()
     private var adapter : FavoriteAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {

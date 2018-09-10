@@ -17,7 +17,7 @@ import org.json.JSONArray
 class FuelUtils (private val c: Context){
     init {
         Toasty.Config.reset()
-        FuelManager.instance.basePath = "https://usicmusic.herokuapp.com/api"
+        FuelManager.instance.basePath = "http://115.68.22.74/api"
     }
 
     private val gson = Gson()

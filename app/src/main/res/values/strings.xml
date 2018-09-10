@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">usicMusic</string>
 
-    <string name="server_url">https://usicmusic.herokuapp.com</string>
+    <string name="server_url">http://115.68.22.74</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="artist_no">No Artist</string>
+    <string name="music_no">No Music</string>
+    <string name="sel_music">Select music</string>
 </resources>

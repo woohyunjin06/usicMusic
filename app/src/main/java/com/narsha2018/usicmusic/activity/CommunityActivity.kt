@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
@@ -19,8 +21,7 @@ import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 
 class CommunityActivity : AppCompatActivity() {
-    var progressDialog: ProgressDialog? = null
-
+    private var progressDialog: ProgressDialog? = null
     private val fuelUtils = FuelUtils(this)
     private val mItems = ArrayList<ShareItem>()
     private var adapter: ShareAdapter? = null
@@ -35,7 +36,7 @@ class CommunityActivity : AppCompatActivity() {
         swipe_layout.setOnRefreshListener {  loadMusic() }
         back.setOnClickListener { onBackPressed() }
         write.setOnClickListener { startActivityForResult<WriteActivity>(1) }
-    };
+    }
     private fun initRecyclerView() { // RecyclerView 기본세팅
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)

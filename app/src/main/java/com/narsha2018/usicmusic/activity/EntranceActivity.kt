@@ -23,10 +23,9 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
-
 class EntranceActivity : AppCompatActivity() {
-    val fuelUtil = FuelUtils(this)
-    val gson = Gson()
+    private val fuelUtil = FuelUtils(this)
+    private val gson = Gson()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entrance)

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.narsha2018.usicmusic.activity
 
 import android.app.Activity
@@ -16,17 +18,14 @@ import com.narsha2018.usicmusic.util.PreferencesUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.json.JSONObject
 
 class DetailActivity : AppCompatActivity(){
-    val fuelUtils = FuelUtils(this)
+    private val fuelUtils = FuelUtils(this)
     var id : String ? = null
-    var idx : Int = 0
     private val mItems = ArrayList<CommentItem>()
     private var adapter: CommentAdapter? = null
-
-    var progressDialog: ProgressDialog? = null
+    private var progressDialog: ProgressDialog? = null
     private fun loadDetail() {
         progressDialog?.show()
         doAsync {
@@ -40,6 +39,7 @@ class DetailActivity : AppCompatActivity(){
         id = intent.getStringExtra("id")
         val uid = PreferencesUtils(this).getData("id")
 
+        loadDetail()
 
         list.setHasFixedSize(false)
         adapter = CommentAdapter(mItems, this)
@@ -51,7 +51,7 @@ class DetailActivity : AppCompatActivity(){
             } else
                 fuelUtils.postData("/board/$id/comment", CommentRequest(uid, commentInput.text.toString()), FuelUtils.PostEnum.Comment)
         commentInput.setText("")}
-        header.onClick {
+        header.setOnClickListener {
             if (writer.text == uid)
                 alert("정말로 삭제하시겠습니까?") {
                     also {
@@ -81,7 +81,7 @@ class DetailActivity : AppCompatActivity(){
             val comments = obj.getJSONObject("message").getJSONArray("comments")
 
             for (idx in 0 until comments.length()) {
-                var comment = comments.getJSONObject(idx)
+                val comment = comments.getJSONObject(idx)
                 mItems.add(CommentItem(id!!, comment.getString("_id"), comment.getString("comment"), comment.getString("name")))
             }
             uiThread {

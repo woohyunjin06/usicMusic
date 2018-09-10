@@ -15,10 +15,6 @@ class AutosizeTextView : TextView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {}
 
-    fun setFitTextToBox(fit: Boolean?) {
-        this.fit = fit!!
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (fit) _shrinkToFit()

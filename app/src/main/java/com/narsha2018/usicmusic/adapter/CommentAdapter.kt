@@ -20,10 +20,10 @@ import java.util.*
 */
 class CommentAdapter(private var mItems: ArrayList<CommentItem>, context : Context) : RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
 
-    val contexts : Context = context
+    private val contexts : Context = context
+    private val fuelUtils = FuelUtils(context)
     var id: String? = null
     var nick: String? = null
-    val fuelUtils = FuelUtils(context)
     // 새로운 뷰 홀더 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
