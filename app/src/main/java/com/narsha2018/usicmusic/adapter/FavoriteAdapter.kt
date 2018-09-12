@@ -15,12 +15,13 @@ import com.narsha2018.usicmusic.R
 import com.narsha2018.usicmusic.`interface`.OnPlayListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_favorite.view.*
+import org.jetbrains.anko.imageResource
 import java.util.ArrayList
 
 /**
 * Created by hyunjin on 2018. 5. 11..
 */
-class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Context, private var listener: OnPlayListener) : RecyclerView.Adapter<FavoriteAdapter.ItemViewHolder>() {
+class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Context, private var listener: OnPlayListener, val regex: String?) : RecyclerView.Adapter<FavoriteAdapter.ItemViewHolder>() {
 
     private val contexts : Context = context
     var id: String? = null
@@ -46,6 +47,8 @@ class FavoriteAdapter(private var mItems: ArrayList<FavoriteItem>, context : Con
                         .error(R.drawable.ic_launcher) //실패
                         .fallback(R.drawable.ic_launcher)) //없음
                 .into(holder.thumbnail)
+        if(regex!=null && regex == mItems[position].musicTitle)
+            holder.btn.imageResource = R.drawable.ic_pause
         holder.btn.setOnClickListener { listener.onClickPlay(null, mItems[position].musicTitle, mItems[position].musicUri, holder.btn) }
     }
 

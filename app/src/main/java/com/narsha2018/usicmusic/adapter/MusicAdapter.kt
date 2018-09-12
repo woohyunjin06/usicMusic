@@ -21,12 +21,13 @@ import com.narsha2018.usicmusic.util.FuelUtils
 import com.narsha2018.usicmusic.util.PreferencesUtils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_chart.view.*
+import org.jetbrains.anko.imageResource
 import java.util.*
 
 /**
 * Created by hyunjin on 2018. 5. 11..
 */
-class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, private var listener: OnPlayListener, private var isSearch: Boolean) : RecyclerView.Adapter<MusicAdapter.ItemViewHolder>() {
+class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, private var listener: OnPlayListener, private var isSearch: Boolean, private val regex: String?) : RecyclerView.Adapter<MusicAdapter.ItemViewHolder>() {
 
     private val contexts : Context = context
     var id: String? = null
@@ -74,6 +75,8 @@ class MusicAdapter(private var mItems: ArrayList<MusicItem>, context : Context, 
             }
             isLike = !isLike
         }
+        if(regex!=null && mItems[position].musicTitle == regex)
+            holder.play.imageResource = R.drawable.ic_pause
         holder.play.setOnClickListener {
             listener.onClickPlay(mItems[position].idx,mItems[position].musicTitle, mItems[position].musicUri ,holder.play)
         }

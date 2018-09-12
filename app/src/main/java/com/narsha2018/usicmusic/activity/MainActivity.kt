@@ -1,8 +1,10 @@
 package com.narsha2018.usicmusic.activity
 
 import android.app.*
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -27,6 +29,8 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.json.JSONObject
 
+
+
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(){ //rank activity
 
@@ -48,14 +52,26 @@ class MainActivity : AppCompatActivity(){ //rank activity
         progressDialog!!.setMessage("Loading...")
         Toasty.Config.reset()
 
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("com.narsha2018.usicmusic.finish")
+        val mReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                song.text = "Select music"
+                btn_play.imageResource = R.drawable.ic_pause
+                btn_play.setOnClickListener {  }
+            }
+        }
+        registerReceiver(mReceiver, intentFilter)
+
+
         mapClickListener()
         loadRank()
     }
 
     private fun mapClickListener(){
-        music.setOnClickListener { startActivityForResult<MusicActivity>(1) }
-        favorite.setOnClickListener { startActivityForResult<FavoriteActivity>(1) }
-        find.setOnClickListener { startActivityForResult<SearchActivity>(1) }
+        music.setOnClickListener {startActivityForResult<MusicActivity>(1, "title" to titles) }
+        favorite.setOnClickListener { startActivityForResult<FavoriteActivity>(1,"title" to titles) }
+        find.setOnClickListener { startActivityForResult<SearchActivity>(1,"title" to titles) }
         community.setOnClickListener { startActivity<CommunityActivity>() }
     }
 
@@ -109,7 +125,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
                     .into(profile1_img)
 
             play1.setOnClickListener {
-                onClickPlay(rankArray[0].title,rankArray[0].music,play1)
+                onClickPlay(rankArray[0].title,getString(R.string.server_url)+rankArray[0].music,play1)
             }
         }
         if(rankArray.size >= 1){
@@ -123,7 +139,7 @@ class MainActivity : AppCompatActivity(){ //rank activity
                             .fallback(R.drawable.ic_launcher)) //없음
                     .into(profile2_img)
             play2.setOnClickListener {
-                onClickPlay(rankArray[1].title,rankArray[1].music,play2)
+                onClickPlay(rankArray[1].title,getString(R.string.server_url)+rankArray[1].music,play2)
             }
         }
         if(rankArray.size >= 2){
@@ -137,7 +153,8 @@ class MainActivity : AppCompatActivity(){ //rank activity
                             .fallback(R.drawable.ic_launcher)) //없음
                     .into(profile3_img)
             play3.setOnClickListener {
-                onClickPlay(rankArray[2].title,rankArray[2].music,play3)
+                onClickPlay(rankArray[2].title,getString(R.string.server_url)+rankArray[2].music,play3)
+
             }
         }
 
@@ -168,6 +185,8 @@ class MainActivity : AppCompatActivity(){ //rank activity
             btn.imageResource = R.drawable.ic_play
             isPlaying = false
 
+            titles = null
+
             val i = Intent(this, MusicService::class.java)
             i.putExtra(MusicService.SONG_NAME, title)
             i.putExtra(MusicService.SONG_URL, uri)
@@ -178,7 +197,27 @@ class MainActivity : AppCompatActivity(){ //rank activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data.getBooleanExtra("isPlaying", false)) {
+                isPlaying = data.getBooleanExtra("isPlaying", false)
+                if(isPlaying) {
+                    play1.imageResource = R.drawable.ic_play
+                    play2.imageResource = R.drawable.ic_play
+                    play3.imageResource = R.drawable.ic_play
+
+                    titles = data.getStringExtra("songTitle")
+                    when(titles){
+                        musicTitle1.text -> {
+                            play1.imageResource = R.drawable.ic_pause
+                            isPlaying = true
+                        }
+                        musicTitle2.text -> {
+                            play2.imageResource = R.drawable.ic_pause
+                            isPlaying = true
+                        }
+                        musicTitle3.text -> {
+                            play3.imageResource = R.drawable.ic_pause
+                            isPlaying = true
+                        }
+                    }
                     song.text = data.getStringExtra("songTitle")
                     btn_play.imageResource = R.drawable.ic_pause
                     btn_play.setOnClickListener {stopService(Intent(this@MainActivity, MusicService::class.java))

@@ -64,6 +64,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
     private val fuelUtils = FuelUtils(this)
     private val mItems = ArrayList<MusicItem>()
     private var adapter: MusicAdapter? = null
+    private var playingTitle : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -72,6 +73,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
         progressDialog = ProgressDialog(this)
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
+        playingTitle = intent.getStringExtra("title")
         btn_search.setOnClickListener { loadMusic() }
         edt_search.setOnKeyListener(View.OnKeyListener { _, p1, p2 ->
             if ((p2!!.action == KeyEvent.ACTION_DOWN) && (p1 == KeyEvent.KEYCODE_ENTER)) {
@@ -86,7 +88,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)
 
-        adapter = MusicAdapter(mItems, this, this, true)
+        adapter = MusicAdapter(mItems, this, this, true, playingTitle)
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
     }

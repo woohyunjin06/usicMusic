@@ -16,6 +16,7 @@ class MusicService : Service() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
     companion object {
         const val SONG_URL = "songUrl"
         const val SONG_NAME = "songTitle"
@@ -38,6 +39,10 @@ class MusicService : Service() {
         title = intent.extras!!.getString(SONG_NAME, "")
         mediaPlayer.playMusic(url!!)
 
+        mediaPlayer.setOnCompletionListener {
+            sendBroadcast(Intent("com.narsha2018.usicmusic.finish"))
+        }
+
         val mainIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 1, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -53,7 +58,8 @@ class MusicService : Service() {
     }
 
     override fun onDestroy() {
-        mediaPlayer.stop()
+        sendBroadcast(Intent("com.narsha2018.usicmusic.finish"))
+        mediaPlayer.stopMusic()
         mNotifyManager!!.cancel(1)
         super.onDestroy()
     }

@@ -65,15 +65,18 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
     private val fuelUtils = FuelUtils(this)
     private val mItems = ArrayList<MusicItem>()
     private var adapter: MusicAdapter? = null
+
+    private var playingTitle : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_music)
-        initRecyclerView()
         Toasty.Config.reset()
         URL = getString(R.string.server_url)
         progressDialog = ProgressDialog(this)
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
+        playingTitle = intent.getStringExtra("title")
+        initRecyclerView()
         loadMusic()
         swipe_layout.setOnRefreshListener { loadMusic() }
     }
@@ -82,7 +85,7 @@ class MusicActivity : AppCompatActivity(), OnPlayListener {
         // 변경될 가능성 o : false 로 , 없다면 true.
         list.setHasFixedSize(false)
 
-        adapter = MusicAdapter(mItems, this, this, false)
+        adapter = MusicAdapter(mItems, this, this, false, playingTitle)
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
     }
