@@ -34,7 +34,6 @@ class CommunityActivity : AppCompatActivity() {
         progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         progressDialog!!.setMessage("Loading...")
         swipe_layout.setOnRefreshListener {  loadMusic() }
-        back.setOnClickListener { onBackPressed() }
         write.setOnClickListener { startActivityForResult<WriteActivity>(1) }
     }
     private fun initRecyclerView() { // RecyclerView 기본세팅

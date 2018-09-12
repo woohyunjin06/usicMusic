@@ -22,13 +22,29 @@ import kotlinx.android.synthetic.main.activity_entrance.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+
+
 
 class EntranceActivity : AppCompatActivity() {
     private val fuelUtil = FuelUtils(this)
     private val gson = Gson()
+
+    enum class NetworkState{
+        WIFI, MOBILE, NONE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entrance)
+        Toasty.Config.reset()
+
+        if(checkNetwork() == NetworkState.NONE){
+            Toasty.error(this, "네트워크를 연결해주세요").show()
+            finish()
+        }
+
         val id = PreferencesUtils(this).getData("id")
         val pw = PreferencesUtils(this).getData("pw")
         if(id.length+pw.length>0){
@@ -93,5 +109,17 @@ class EntranceActivity : AppCompatActivity() {
         script.forEach(output)
         output.copyTo(bitmap)
         return bitmap
+    }
+    private fun checkNetwork() : NetworkState{
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        if (activeNetwork != null) {
+            if (activeNetwork.type == ConnectivityManager.TYPE_WIFI) {
+                return NetworkState.WIFI
+            } else if (activeNetwork.type == ConnectivityManager.TYPE_MOBILE) {
+                return NetworkState.MOBILE
+            }
+        }
+        return NetworkState.NONE
     }
 }
