@@ -8,11 +8,9 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         setDefaultFont(this, "SANS_SERIF", "font/ClementPDae.ttf")
-        // TODO: 한글폰트 합치기
     }
 
     companion object {
-
         fun setDefaultFont(ctx: Context,
                                    staticTypefaceFieldName: String, fontAssetName: String) {
             val regular = Typeface.createFromAsset(ctx.assets,
