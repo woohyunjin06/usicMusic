@@ -70,7 +70,8 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
 
         val layoutManager = CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL)
 
-        adapter = FavoriteAdapter(mItems, this, this)
+        titles = intent.getStringExtra("title")
+        adapter = FavoriteAdapter(mItems, this, this, titles)
 
         list.layoutManager = layoutManager
         list.setHasFixedSize(false)
@@ -109,8 +110,8 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                                 uiThread {
                                     mItems.add(FavoriteItem(item.getString("title"),
                                             DateUtils.fromISO(item.getString("date"))!!,
-                                            "http://192.168.43.94:3000/" + item.getString("music"),
-                                            "http://192.168.43.94:3000/" + item.getString("cover"),
+                                            getString(R.string.server_url) + item.getString("music"),
+                                            getString(R.string.server_url) + item.getString("cover"),
                                             item.getString("artist")
                                     ))
                                 }
@@ -118,8 +119,8 @@ class FavoriteActivity : AppCompatActivity(), OnPlayListener {
                                 uiThread {
                                     mItems.add(FavoriteItem(item.getString("title"),
                                             DateUtils.fromISO(item.getString("date"))!!,
-                                            "http://192.168.43.94:3000/" + item.getString("music"),
-                                            "http://192.168.43.94:3000/" + item.getString("cover"),
+                                            getString(R.string.server_url) + item.getString("music"),
+                                            getString(R.string.server_url) + item.getString("cover"),
                                             "No Artist"
                                     ))
                                 }
