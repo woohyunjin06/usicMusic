@@ -110,7 +110,7 @@ class SearchActivity : AppCompatActivity(), OnPlayListener {
             val arr = JSONObject(musicInfo).getJSONArray("music")
             for (idx: Int in 0 until arr.length()) { // 한개의 음악에 한해
                 val item: JSONObject = arr.getJSONObject(idx)
-                if (item.getBoolean("isMusic") && item.getString("title").contains(keyword!!)) { // 소스가 아니고 음악이면
+                if (item.getBoolean("isMusic") && item.getString("title").toLowerCase().contains(keyword!!.toLowerCase())) { // 소스가 아니고 음악이면
                     val rateArr = item.getJSONArray("rate")
                     var isLike = false
                     for (idx2: Int in 0 until rateArr.length()) { // 좋아요 한 사람중 자신의 이름을 찾으면 is Like = true
